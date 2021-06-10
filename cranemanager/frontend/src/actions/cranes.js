@@ -2,10 +2,11 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 
 import { GET_CRANES, DELETE_CRANE, ADD_CRANE } from "./types";
+import { tokenConfig } from "./auth";
 
 //GET CRANES
-export const getCranes = () => dispatch => {
-    axios.get("/api/cranes/")
+export const getCranes = () => (dispatch, getState) => {
+    axios.get("/api/cranes/", tokenConfig(getState))
     .then(res => {
         dispatch({
             type: GET_CRANES,
@@ -15,8 +16,8 @@ export const getCranes = () => dispatch => {
 }
 
 //DELETE CRANE
-export const deleteCranes = (id) => dispatch => {
-    axios.delete(`/api/cranes/${id}/`)
+export const deleteCranes = (id) => (dispatch, getState) => {
+    axios.delete(`/api/cranes/${id}/`, tokenConfig(getState))
     .then(res => {
         dispatch(createMessage({ deleteCrane: "Crane Deleted" }));
         dispatch({
@@ -27,8 +28,8 @@ export const deleteCranes = (id) => dispatch => {
 }
 
 //ADD CRANE
-export const addCranes = (cranes) => dispatch => {
-    axios.post("/api/cranes/", cranes)
+export const addCranes = (cranes) => (dispatch, getState) => {
+    axios.post("/api/cranes/", cranes, tokenConfig(getState))
     .then(res => {
         dispatch(createMessage({ addCrane: "Crane Added" }));
         dispatch({

@@ -72,6 +72,14 @@ export class Alerts extends Component {
             if(error.msg.electricalParts) {
                 alert.error(`Electrical Parts: ${error.msg.electricalParts.join()}`);
             }
+            // Login
+            if(error.msg.non_field_errors) {
+                alert.error(error.msg.non_field_errors.join());
+            }
+            // Register
+            if(error.msg.username) {
+                alert.error(error.msg.username.join());
+            }
         }
 
         if(message !== prevProps.message) {
@@ -80,6 +88,9 @@ export class Alerts extends Component {
             }
             if(message.addCrane) {
                 alert.success(message.addCrane);
+            }
+            if(message.passwordsNotMatch) {
+                alert.error(message.passwordsNotMatch);
             }
         }
     }
