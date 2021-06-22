@@ -247,12 +247,6 @@ export class Form extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>owner</label>
-                        <select className="form-control" name="owner">
-                            <option value="" defaultValue="">--------</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
                         <button type="submit" className="btn btn-primary">
                             Submit
                         </button>
