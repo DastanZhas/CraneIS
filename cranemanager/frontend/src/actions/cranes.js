@@ -38,3 +38,5 @@ export const addCranes = (cranes) => (dispatch, getState) => {
         });
     }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
+
+//UPDATE CRANE (PUT)
