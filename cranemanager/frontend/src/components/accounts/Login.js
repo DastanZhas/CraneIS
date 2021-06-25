@@ -24,44 +24,26 @@ export class Login extends Component {
 
     render() {
         if(this.props.isAuthenticated) {
-            return <Redirect to="/" />;
+            return <Redirect to="/cranes" />;
         }
         const {username, password} = this.state;
         return (
-            <div className="col-md-6 m-auto">
-                <div className="card card-body mt-5">
-                    <h2 className="text-center">Login</h2>
-                    <form onSubmit={this.onSubmit}>
-                        <div className="form-group">
-                            <label>Username</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="username"
-                                onChange={this.onChange}
-                                value={username}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                onChange={this.onChange}
-                                value={password}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-primary">
-                                Login
-                            </button>
-                        </div>
-                        <p>
-                            Don't have an account? <Link to="/register">Register</Link>
-                        </p>
-                    </form>
-                </div>
+            <div className="form-signin">
+                <form onSubmit={this.onSubmit}>
+                    <h1 className="h3 mb-3 fw-normal">Вход в Приложение</h1>
+
+                    <div className="form-floating">
+                        <input type="text" onChange={this.onChange} className="form-control input-control" id="floatingInput" name="username" value={username} placeholder="username" />
+                        <label htmlFor="floatingInput">Имя пользователя</label>
+                    </div>
+                    <div className="form-floating">
+                        <input type="password" onChange={this.onChange} value={password} className="form-control pwd-control" name="password" id="floatingPassword" placeholder="Password" />
+                        <label htmlFor="floatingPassword">Пароль</label>
+                    </div>
+
+                    <button className="w-100 btn btn-lg btn-primary login-btn" type="submit">Sign in</button>
+                    <p className="mt-5 mb-3 text-muted"> &copy;2021 - made by Dastan and Yeldar </p>
+                </form>
             </div>
         );
     }
