@@ -1,0 +1,55 @@
+//contained within this file are all your resets, variables, mixins, and any utility classes.
+
+$col-black: #212529;
+$col-light-purple: #AFA5D9;
+$col-white: #F7F6FB;
+$col-blue: #2780e3;
+
+$f-fam: 'Nunito', sans-serif;
+$f-size: 1rem;
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+html {
+    height: 90%;
+}
+
+body {
+    height: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+ul {
+    list-style: none;
+
+    li a {
+        text-decoration: none;
+    }
+}
+
+tr {
+    vertical-align: middle
+}
+
+#app {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.gray-bg {
+    background: #6c757d;
+}
