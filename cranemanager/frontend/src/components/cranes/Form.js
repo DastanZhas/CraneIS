@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addCranes } from '../../actions/cranes';
-import Main from '../Main'
 
 export class Form extends Component {
     state = {
@@ -76,7 +75,7 @@ export class Form extends Component {
 
         return (
             <div className="container">
-                <div className="row">
+                <form className="row">
                     <div className="col-xl-12">
                         <div className="card card-body mt-4 mb-4">
                             <h2>Add Cranes</h2>
@@ -92,7 +91,7 @@ export class Form extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Load Capacity</label>
+                                    <label>Грузоподьемность</label>
                                     <input
                                         className="form-control"
                                         type="number"
