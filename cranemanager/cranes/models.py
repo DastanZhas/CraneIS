@@ -6,18 +6,17 @@ from datetime import datetime, date
 # Технический паспорт и сроки освидетельствования
 class ExaminationPeriodTechPassport(models.Model):
     technicalPassportdownloadUrl = models.FileField(max_length=None, blank=False) # Изменить required to True
-    examinationPeriodDate = models.DateField(auto_now_add=True, auto_now=False, blank=True)
+    examinationPeriodDate = models.DateTimeField(auto_now=False)
 
 # Техническое обслуживание 1 - ТО1
 class FirstTechnicalMaintenance(models.Model):
-    #periodOfFirstTMfrom = models.DateTimeField(blank=True, null=True)
-    periodOfFirstTMfrom = models.DateField(auto_now_add=True, auto_now=False, blank=True)
-    periodOfFirstTMto = models.DateField(auto_now_add=True, auto_now=False, blank=True)
+    periodOfFirstTMfrom = models.DateTimeField(auto_now=False)
+    periodOfFirstTMto = models.DateTimeField(auto_now=False)
 
 # Техническое обслуживание 2 - ТО2
 class SecondTechnicalMaintenance(models.Model):
-    periodOfSecondTMfrom = models.DateField(auto_now_add=True, auto_now=False, blank=True)
-    periodOfSecondTMto = models.DateField(auto_now_add=True, auto_now=False, blank=True)
+    periodOfSecondTMfrom = models.DateTimeField(auto_now=False)
+    periodOfSecondTMto = models.DateTimeField(auto_now=False)
     # Ведомость дефектов
     defectsStatement = models.CharField(max_length=200)
     # Ведомость материалов
@@ -25,8 +24,8 @@ class SecondTechnicalMaintenance(models.Model):
 
 # Обследование и сроки
 class Inspection(models.Model):
-    periodInspectionfrom = models.DateField(auto_now_add=True, auto_now=False, blank=True)
-    periodInspectionto = models.DateField(auto_now_add=True, auto_now=False, blank=True)
+    periodInspectionfrom = models.DateTimeField(auto_now=False)
+    periodInspectionto = models.DateTimeField(auto_now=False)
     inspection = models.CharField(max_length=200)
 
 # Лицо ответственное за исправленное состояние
@@ -74,15 +73,15 @@ class Cranes(models.Model):
     # Обследование
     inspection = models.ForeignKey(Inspection, related_name="cranes", on_delete=models.CASCADE)
     # Лицо ответственное за исправленное состояние
-    personResponsibleToFixedState = models.CharField(max_length=100)
+    personResponsibleToFixedState = models.ForeignKey(PersonResponsibleToFixedState,related_name="cranes", on_delete=models.CASCADE)
     # Лицо ответственное по надзору
-    personResponsibleForSupervision = models.CharField(max_length=100)
+    personResponsibleForSupervision = models.ForeignKey(PersonResponsibleForSupervision, related_name="cranes", on_delete=models.CASCADE)
     # Контроль по металу
     metalInspection = models.CharField(max_length=100)
     # Механический контроль
     mechanicalControl = models.CharField(max_length=100)
     # Электронная часть
     electricalParts = models.CharField(max_length=100)
-    timestamp = models.DateField(auto_now_add=True, auto_now=False, blank=True)
+    #timestamp = models.DateTimeField(auto_now=False)
     # user?
     owner = models.ForeignKey(User, related_name="cranes", on_delete=models.CASCADE, null=True)

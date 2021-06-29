@@ -264,61 +264,6 @@ export class Form extends Component {
                             </form>
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label>Person Responsible To Fixed State</label>
-                        <textarea
-                            className="form-control"
-                            type="text"
-                            name="personResponsibleToFixedState"
-                            onChange={this.onChange}
-                            value={personResponsibleToFixedState}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Person Responsible For Supervision</label>
-                        <textarea
-                            className="form-control"
-                            type="text"
-                            name="personResponsibleForSupervision"
-                            onChange={this.onChange}
-                            value={personResponsibleForSupervision}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Metall Inspection</label>
-                        <textarea
-                            className="form-control"
-                            type="text"
-                            name="metalInspection"
-                            onChange={this.onChange}
-                            value={metalInspection}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Mechanical Control</label>
-                        <textarea
-                            className="form-control"
-                            type="text"
-                            name="mechanicalControl"
-                            onChange={this.onChange}
-                            value={mechanicalControl}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Electrical Parts</label>
-                        <textarea
-                            className="form-control"
-                            type="text"
-                            name="electricalParts"
-                            onChange={this.onChange}
-                            value={electricalParts}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <button type="submit" className="btn btn-primary">
-                            Submit
-                        </button>
-                    </div>
                 </form>
             </div>
         )
