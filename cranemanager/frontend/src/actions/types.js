@@ -11,3 +11,8 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
+
+// Examination types
+export const GET_EXAMINATION = "GET_EXAMINATION";
+export const DELETE_EXAMINATION = "DELETE_EXAMINATON";
+export const ADD_EXAMINATION = "ADD_EXAMINATION";

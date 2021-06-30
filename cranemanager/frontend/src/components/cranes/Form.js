@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addCranes } from '../../actions/cranes';
+import { addCranes, addExamination } from '../../actions/cranes';
 
 export class Form extends Component {
     state = {
@@ -26,10 +26,11 @@ export class Form extends Component {
     }
 
     static propTypes = {
-        addCranes: PropTypes.func.isRequired
+        addCranes: PropTypes.func.isRequired,
+        addExamination: PropTypes.func.isRequired
     }
 
-    onChange = e => this.setState({ [e.target.name]:e.target.value });
+    onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     onSubmit = e => {
         e.preventDefault();
@@ -38,12 +39,19 @@ export class Form extends Component {
             workMode, installationPlace, technicalMaintenanceFirst, technicalMaintenanceSecond, inspection, personResponsibleToFixedState,
             personResponsibleForSupervision, metalInspection, mechanicalControl, electricalParts, owner
         } = this.state;
+
         const crane = {
             craneType, loadCapacity, registerNumber, factoryNumber, inventorizationNumber, factoryManufacturer, examinationPeriod,
             workMode, installationPlace, technicalMaintenanceFirst, technicalMaintenanceSecond, inspection, personResponsibleToFixedState,
             personResponsibleForSupervision, metalInspection, mechanicalControl, electricalParts, owner
         };
+        const examinationInsert = {
+            technicalPassportdownloadUrl, examinationPeriodDate
+        }
+
         this.props.addCranes(crane);
+        this.props.addExamination(examinationInsert);
+
         this.setState({
             craneType: "",
             loadCapacity: "",
@@ -141,14 +149,10 @@ export class Form extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Examination Period</label>
-                                    <input
-                                        className="form-control"
-                                        type="datetime-local"
-                                        name="examinationPeriod"
-                                        onChange={this.onChange}
-                                        value={examinationPeriod}
-                                    />
+                                    <label>Срок освидетельствования и паспорт</label>
+                                    <select className="form-control" name="examinationPeriod">
+                                        <option value="" defaultValue="">--------</option>
+                                    </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Work Mode</label>
@@ -171,54 +175,34 @@ export class Form extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>First Technical Maintenance</label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        name="technicalMaintenanceFirst"
-                                        onChange={this.onChange}
-                                        value={technicalMaintenanceFirst}
-                                    />
+                                    <label>1 Техническое обслуживание</label>
+                                    <select className="form-control" name="technicalMaintenanceFirst">
+                                        <option value="" defaultValue="">--------</option>
+                                    </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Second Technical Maintenance</label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        name="technicalMaintenanceSecond"
-                                        onChange={this.onChange}
-                                        value={technicalMaintenanceSecond}
-                                    />
+                                    <label>2 Техническое обслуживание</label>
+                                    <select className="form-control" name="technicalMaintenanceSecond">
+                                        <option value="" defaultValue="">--------</option>
+                                    </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Inspection</label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        name="inspection"
-                                        onChange={this.onChange}
-                                        value={inspection}
-                                    />
+                                    <label>Обследование</label>
+                                    <select className="form-control" name="inspection">
+                                        <option value="" defaultValue="">--------</option>
+                                    </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Person Responsible To Fixed State</label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        name="personResponsibleToFixedState"
-                                        onChange={this.onChange}
-                                        value={personResponsibleToFixedState}
-                                    />
+                                    <label>Лицо ответственное за исправленное состояние</label>
+                                    <select className="form-control" name="personResponsobleToFixedState">
+                                        <option value="" defaultValue="">--------</option>
+                                    </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Person Responsible For Supervision</label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        name="personResponsibleForSupervision"
-                                        onChange={this.onChange}
-                                        value={personResponsibleForSupervision}
-                                    />
+                                    <label>Лицо ответственное по надзору</label>
+                                    <select className="form-control" name="personResponsobleForSupervision">
+                                        <option value="" defaultValue="">--------</option>
+                                    </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Metall Inspection</label>
@@ -257,7 +241,7 @@ export class Form extends Component {
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <button type="submit" className="btn btn-primary btn-form">
+                                    <button type="submit" className="btn btn-primary btn-form" onSubmit={this.onSubmit}>
                                         Submit
                                     </button>
                                 </div>
@@ -278,4 +262,4 @@ export class Form extends Component {
     }
 }
 
-export default connect(null, { addCranes })(Form);
+export default connect(null, { addCranes, addExamination })(Form);
