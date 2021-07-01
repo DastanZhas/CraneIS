@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes, { element } from 'prop-types';
-import { getCranes, getExamination } from '../../actions/cranes';
+import { getCranes, deleteCranes } from '../../actions/cranes';
+import { getExamination } from '../../actions/examinationPeriodPassport';
 import cranes from '../../reducers/cranes';
 import examination from '../../reducers/cranes';
 import Modal from './Modal';
@@ -12,15 +13,14 @@ export class Cranes extends Component {
     }
 
     static propTypes = {
-        examination: PropTypes.array.isRequired,
         getExamination: PropTypes.func.isRequired,
         getCranes: PropTypes.func.isRequired,
         deleteCranes: PropTypes.func.isRequired
     }
 
     componentDidMount() {
-        this.props.getExamination();
         this.props.getCranes();
+        this.props.getExamination();
     }
 
     showModal = (e) => {
@@ -60,7 +60,7 @@ export class Cranes extends Component {
                                                 <td>{examination.technicalPassportdownloadUrl}</td>
                                                 <td>{examination.examinationPeriodDate}</td>
                                                 {/* <td>{cranes.factoryManufacturer}</td> */}
-                                                <td className="btn-cranes"><button className="btn btn-md btn-primary" onClick={this.showModal} value={cranes.id}>Подробнее</button></td>
+                                                <td className="btn-cranes"><button className="btn btn-md btn-primary" onClick={this.showModal} value={examination.id}>Подробнее</button></td>
                                             </tr>
                                         )) 
                                         }
@@ -93,8 +93,8 @@ export class Cranes extends Component {
 }
 
 const mapStateToProps = state => ({
-    examination: state.cranes.examination,
-    cranes: state.cranes.cranes
+    cranes: state.cranes.cranes,
+    examination: state.cranes.examination
 });
 
-export default connect(mapStateToProps, { getExamination, getCranes })(Cranes);
+export default connect(mapStateToProps, { getCranes, deleteCranes, getExamination })(Cranes);

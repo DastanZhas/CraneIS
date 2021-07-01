@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addCranes, addExamination } from '../../actions/cranes';
+import { addCranes } from '../../actions/cranes';
+import { addExamination } from '../../actions/examinationPeriodPassport';
 
 export class Form extends Component {
     state = {

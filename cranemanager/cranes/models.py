@@ -38,6 +38,7 @@ class PersonResponsibleToFixedState(models.Model):
     # Отчество
     employeePatronymic = models.CharField(max_length=100)
 
+# Лицо ответственное по надзору
 class PersonResponsibleForSupervision(models.Model):
     personImage = models.ImageField(max_length=None, blank=False) # Изменить required to True
     employeePost = models.CharField(max_length=100)
