@@ -1,15 +1,17 @@
 import React, { Component, useEffect } from 'react'
-import { getCranes, deleteCranes } from '../../actions/cranes';
+import { getCranes, deleteCranes, updateCrane } from '../../actions/cranes';
 import { connect } from 'react-redux';
 import cranes from '../../reducers/cranes';
 
 class Modal extends Component {
     state = {
-        keys: []
+        keys: [],
+        click: false,
     }
 
     componentDidMount() {
         this.props.getCranes();
+        
 
         let keyArr = []
         let valArr = []
@@ -23,6 +25,12 @@ class Modal extends Component {
         keyArr.forEach((key, i) => objectArray[key] == valArr[i])
 
         this.setState({keys: objectArray})
+    }
+
+    btnClicked() {
+        alert("uuu");
+        this.setState({click: !this.state.click});
+        alert(this.state.click)
     }
 
     componentDidUpdate() {
@@ -63,6 +71,9 @@ class Modal extends Component {
                                 <div className="form-btns">
                                     <button onClick={this.props.deleteCranes.bind(this, item.id)} className="btn btn-md btn-danger">Удалить</button>
                                 </div>
+                                <div className="form-btns" onClick={this.btnClicked}>
+                                    <button onClick={this.props.updateCrane.bind(this, item.id)} className="btn btn-md btn-success">Обновить</button>
+                                </div>
                             </div>
                             <button className="modal-btn" onClick={this.props.hideModal}>
                                 <i className="fas fa-times"></i> 
@@ -80,4 +91,4 @@ const mapStateToProps = state => ({
     cranes: state.cranes.cranes
 });
 
-export default connect(mapStateToProps, { getCranes, deleteCranes })(Modal);
+export default connect(mapStateToProps, { getCranes, deleteCranes, updateCrane })(Modal);

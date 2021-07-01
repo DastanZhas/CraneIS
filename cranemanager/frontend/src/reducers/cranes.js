@@ -1,7 +1,8 @@
-import { GET_CRANES, DELETE_CRANE, ADD_CRANE } from '../actions/types';
+import { GET_CRANES, DELETE_CRANE, ADD_CRANE, GET_EXAMINATION, DELETE_EXAMINATION, ADD_EXAMINATION, UPDATE_CRANE } from '../actions/types';
 
 const initialState = {
-    cranes: []
+    cranes: [],
+    examination: []
 }
 
 export default function(state = initialState, action) {
@@ -21,6 +22,26 @@ export default function(state = initialState, action) {
                     ...state,
                     cranes: [...state.cranes, action.payload]
                 };
+        case UPDATE_CRANE:
+                return {
+                    ...state,
+                    cranes: [...state.cranes, action.payload]
+                };
+        case GET_EXAMINATION:
+            return {
+                ...state,
+                examination: action.payload
+            }
+        case DELETE_EXAMINATION:
+            return {
+                ...state,
+                examination: state.examination.filter(examination => examination.id !== action.payload)
+            }
+        case ADD_EXAMINATION:
+            return {
+                ...state,
+                examination: [...state.examination, action.payload]
+            }
     default:
         return state;
     }
