@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import PropTypes, { element } from 'prop-types';
 import { addCranes } from '../../actions/cranes';
-import { addExamination } from '../../actions/examinationPeriodPassport';
+import examination from '../../reducers/cranes';
+import to1 from '../../reducers/cranes';
+import { addExamination, getExamination } from '../../actions/examinationPeriodPassport';
+import { getTo1 } from '../../actions/to1';
+import { getTo2 } from '../../actions/to2';
+import { getInspection } from '../../actions/inspection';
+import { getPersonResponsibleToFixedState } from '../../actions/personResponsibleFixedState';
+import { getPersonResponsibleSupervision } from '../../actions/personResponsibleSupervision'
 
 export class Form extends Component {
     state = {
@@ -28,7 +35,22 @@ export class Form extends Component {
 
     static propTypes = {
         addCranes: PropTypes.func.isRequired,
-        addExamination: PropTypes.func.isRequired
+        addExamination: PropTypes.func.isRequired,
+        getExamination: PropTypes.func.isRequired,
+        getTo1: PropTypes.func.isRequired,
+        getTo2: PropTypes.func.isRequired,
+        getInspection: PropTypes.func.isRequired,
+        getPersonResponsibleToFixedState: PropTypes.func.isRequired,
+        getPersonResponsibleSupervision: PropTypes.func.isRequired
+    }
+
+    componentDidMount() {
+        this.props.getExamination();
+        this.props.getTo1();
+        this.props.getTo2();
+        this.props.getInspection();
+        this.props.getPersonResponsibleToFixedState();
+        this.props.getPersonResponsibleSupervision();
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -152,7 +174,9 @@ export class Form extends Component {
                                 <div className="form-group">
                                     <label>Срок освидетельствования и паспорт</label>
                                     <select className="form-control" name="examinationPeriod">
-                                        <option value="" defaultValue="">--------</option>
+                                        {this.props.examination.map(examination => (
+                                            <option value="" defaultValue="">{examination.id}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="form-group">
@@ -178,31 +202,41 @@ export class Form extends Component {
                                 <div className="form-group">
                                     <label>1 Техническое обслуживание</label>
                                     <select className="form-control" name="technicalMaintenanceFirst">
-                                        <option value="" defaultValue="">--------</option>
+                                        {this.props.to1.map(to1 => (
+                                            <option value="" defaultValue="">{to1.id}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label>2 Техническое обслуживание</label>
                                     <select className="form-control" name="technicalMaintenanceSecond">
-                                        <option value="" defaultValue="">--------</option>
+                                        {this.props.to2.map(to2 => (
+                                            <option value="" defaultValue="">{to2.id}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Обследование</label>
                                     <select className="form-control" name="inspection">
-                                        <option value="" defaultValue="">--------</option>
+                                        {this.props.inspection.map(inspection => (
+                                            <option value="" defaultValue="">{inspection.id}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Лицо ответственное за исправленное состояние</label>
                                     <select className="form-control" name="personResponsobleToFixedState">
-                                        <option value="" defaultValue="">--------</option>
+                                        {this.props.personResponsibleToFixedState.map(personResponsibleToFixedState => (
+                                            <option value="" defaultValue="">{personResponsibleToFixedState.id}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Лицо ответственное по надзору</label>
                                     <select className="form-control" name="personResponsobleForSupervision">
-                                        <option value="" defaultValue="">--------</option>
+                                        {this.props.personResponsibleForSupervision.map(personResponsibleForSupervision => (
+                                            <option value={personResponsibleForSupervision} defaultValue="">{personResponsibleForSupervision.id}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="form-group">
@@ -263,4 +297,14 @@ export class Form extends Component {
     }
 }
 
-export default connect(null, { addCranes, addExamination })(Form);
+const mapStateToProps = state => ({
+    cranes: state.cranes.cranes,
+    examination: state.cranes.examination,
+    to1: state.cranes.to1,
+    to2: state.cranes.to2,
+    inspection: state.cranes.inspection,
+    personResponsibleToFixedState: state.cranes.personResponsibleToFixedState,
+    personResponsibleForSupervision: state.cranes.personResponsibleForSupervision
+});
+
+export default connect(mapStateToProps, { addCranes, addExamination, getExamination, getTo1, getTo2, getInspection, getPersonResponsibleToFixedState, getPersonResponsibleSupervision })(Form);

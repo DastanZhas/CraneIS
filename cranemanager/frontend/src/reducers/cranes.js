@@ -9,6 +9,7 @@ const initialState = {
     cranes: [],
     examination: [],
     to1: [],
+    to2: [],
     inspection: [],
     personResponsibleToFixedState: [],
     personResponsibleForSupervision: []
