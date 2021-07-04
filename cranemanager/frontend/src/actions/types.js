@@ -37,7 +37,7 @@ export const ADD_INSPECTION = "GET_INSPECTION";
 export const PUT_INSPECTION = "GET_INSPECTION";
 
 // Person Responsible to fixed state # Лицо ответственное за исправленное состояние
-export const GET_PERSON_FIXED_STATE = "PERSON_FIXED_STATE";
+export const GET_PERSON_FIXED_STATE = "GET_PERSON_FIXED_STATE";
 export const DELETE_PERSON_FIXED_STATE = "DELETE_PERSON_FIXED_STATE";
 export const ADD_PERSON_FIXED_STATE = "ADD_PERSON_FIXED_STATE";
 export const PUT_PERSON_FIXED_STATE = "PUT_PERSON_FIXED_STATE";

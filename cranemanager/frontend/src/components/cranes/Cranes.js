@@ -68,8 +68,8 @@ export class Cranes extends Component {
                                     <tbody>
                                         { this.props.cranes.map(cranes => (
                                             <tr key={cranes.id}>
-                                                <tr>{cranes.id}</tr>
-                                                <tr>{cranes.craneType}</tr>
+                                                {/* <tr>{cranes.id}</tr>
+                                                <tr>{cranes.craneType}</tr> */}
                                             </tr>
                                         )) }
                                     </tbody>

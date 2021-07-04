@@ -68,9 +68,9 @@ export class Form extends Component {
             workMode, installationPlace, technicalMaintenanceFirst, technicalMaintenanceSecond, inspection, personResponsibleToFixedState,
             personResponsibleForSupervision, metalInspection, mechanicalControl, electricalParts, owner
         };
-        const examinationInsert = {
-            technicalPassportdownloadUrl, examinationPeriodDate
-        }
+        // const examinationInsert = {
+        //     technicalPassportdownloadUrl, examinationPeriodDate
+        // }
 
         this.props.addCranes(crane);
         this.props.addExamination(examinationInsert);
@@ -100,8 +100,8 @@ export class Form extends Component {
     renderComponent() {
         const {
             craneType, loadCapacity, registerNumber, factoryNumber, inventorizationNumber, factoryManufacturer, examinationPeriod,
-            workMode, installationPlace, technicalMaintenanceFirst, technicalMaintenanceSecond, inspection, personResponsibleToFixedState,
-            personResponsibleForSupervision, metalInspection, mechanicalControl, electricalParts, owner
+            workMode, installationPlace, technicalMaintenanceFirst, technicalMaintenanceSecond, inspectionInsert, personResponsibleToFixedStateInsert,
+            personResponsibleForSupervisionInsert, metalInspection, mechanicalControl, electricalParts, owner
         } = this.state;
 
         return (
@@ -175,7 +175,7 @@ export class Form extends Component {
                                     <label>Срок освидетельствования и паспорт</label>
                                     <select className="form-control" name="examinationPeriod">
                                         {this.props.examination.map(examination => (
-                                            <option value="" defaultValue="">{examination.id}</option>
+                                            <option value={examinationPeriod} defaultValue="">{examination.id}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -203,7 +203,7 @@ export class Form extends Component {
                                     <label>1 Техническое обслуживание</label>
                                     <select className="form-control" name="technicalMaintenanceFirst">
                                         {this.props.to1.map(to1 => (
-                                            <option value="" defaultValue="">{to1.id}</option>
+                                            <option value={technicalMaintenanceFirst} defaultValue="">{to1.id}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -211,7 +211,7 @@ export class Form extends Component {
                                     <label>2 Техническое обслуживание</label>
                                     <select className="form-control" name="technicalMaintenanceSecond">
                                         {this.props.to2.map(to2 => (
-                                            <option value="" defaultValue="">{to2.id}</option>
+                                            <option value={technicalMaintenanceSecond} defaultValue="">{to2.id}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -219,7 +219,7 @@ export class Form extends Component {
                                     <label>Обследование</label>
                                     <select className="form-control" name="inspection">
                                         {this.props.inspection.map(inspection => (
-                                            <option value="" defaultValue="">{inspection.id}</option>
+                                            <option value={inspectionInsert} defaultValue="">{inspection.id}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -227,7 +227,7 @@ export class Form extends Component {
                                     <label>Лицо ответственное за исправленное состояние</label>
                                     <select className="form-control" name="personResponsobleToFixedState">
                                         {this.props.personResponsibleToFixedState.map(personResponsibleToFixedState => (
-                                            <option value="" defaultValue="">{personResponsibleToFixedState.id}</option>
+                                            <option value={personResponsibleToFixedStateInsert} defaultValue="">{personResponsibleToFixedState.id}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -235,7 +235,7 @@ export class Form extends Component {
                                     <label>Лицо ответственное по надзору</label>
                                     <select className="form-control" name="personResponsobleForSupervision">
                                         {this.props.personResponsibleForSupervision.map(personResponsibleForSupervision => (
-                                            <option value={personResponsibleForSupervision} defaultValue="">{personResponsibleForSupervision.id}</option>
+                                            <option value={personResponsibleForSupervisionInsert} defaultValue="">{personResponsibleForSupervision.employeeFirstName}</option>
                                         ))}
                                     </select>
                                 </div>

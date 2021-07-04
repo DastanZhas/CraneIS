@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 
-import { GET_CRANES, DELETE_CRANE, ADD_CRANE, GET_TO1, ADD_TO1, DELETE_TO1 } from "./types";
+import { GET_CRANES, DELETE_CRANE, ADD_CRANE } from "./types";
 import { tokenConfig } from "./auth";
 
 //GET CRANES
