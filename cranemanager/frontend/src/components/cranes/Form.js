@@ -12,26 +12,29 @@ import { getPersonResponsibleToFixedState } from '../../actions/personResponsibl
 import { getPersonResponsibleSupervision } from '../../actions/personResponsibleSupervision'
 
 export class Form extends Component {
-    state = {
-        craneType: "",
-        loadCapacity: "",
-        registerNumber: "",
-        factoryNumber: "",
-        inventorizationNumber: "",
-        factoryManufacturer: "",
-        examinationPeriod: "",
-        workMode: "",
-        installationPlace: "",
-        technicalMaintenanceFirst: "",
-        technicalMaintenanceSecond: "",
-        inspection: "",
-        personResponsibleToFixedState: "",
-        personResponsibleForSupervision: "",
-        metalInspection: "",
-        mechanicalControl: "",
-        electricalParts: "",
-        owner: ""
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            craneType: "",
+            loadCapacity: "",
+            registerNumber: "",
+            factoryNumber: "",
+            inventorizationNumber: "",
+            factoryManufacturer: "",
+            examinationPeriod: "",
+            workMode: "",
+            installationPlace: "",
+            technicalMaintenanceFirst: "",
+            technicalMaintenanceSecond: "",
+            inspection: "",
+            personResponsibleToFixedState: "",
+            personResponsibleForSupervision: "",
+            metalInspection: "",
+            mechanicalControl: "",
+            electricalParts: "",
+            owner: ""
+        };
+      }
 
     static propTypes = {
         addCranes: PropTypes.func.isRequired,
@@ -57,53 +60,31 @@ export class Form extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const {
-            craneType, loadCapacity, registerNumber, factoryNumber, inventorizationNumber, factoryManufacturer, examinationPeriod,
-            workMode, installationPlace, technicalMaintenanceFirst, technicalMaintenanceSecond, inspection, personResponsibleToFixedState,
-            personResponsibleForSupervision, metalInspection, mechanicalControl, electricalParts, owner
-        } = this.state;
-
         const crane = {
-            craneType, loadCapacity, registerNumber, factoryNumber, inventorizationNumber, factoryManufacturer, examinationPeriod,
-            workMode, installationPlace, technicalMaintenanceFirst, technicalMaintenanceSecond, inspection, personResponsibleToFixedState,
-            personResponsibleForSupervision, metalInspection, mechanicalControl, electricalParts, owner
-        };
-        // const examinationInsert = {
-        //     technicalPassportdownloadUrl, examinationPeriodDate
-        // }
-
-        this.props.addCranes(crane);
-        this.props.addExamination(examinationInsert);
-
-        this.setState({
-            craneType: "",
-            loadCapacity: "",
-            registerNumber: "",
-            factoryNumber: "",
-            inventorizationNumber: "",
-            factoryManufacturer: "",
-            examinationPeriod: "",
-            workMode: "",
-            installationPlace: "",
-            technicalMaintenanceFirst: "",
-            technicalMaintenanceSecond: "",
-            inspection: "",
-            personResponsibleToFixedState: "",
-            personResponsibleForSupervision: "",
-            metalInspection: "",
-            mechanicalControl: "",
-            electricalParts: "",
-            owner: ""
-        });
+            content: this.state.content,
+            craneType: this.state.craneType,
+            loadCapacity: this.state.loadCapacity,
+            registerNumber: this.state.registerNumber,
+            factoryNumber: this.state.factoryNumber,
+            inventorizationNumber: this.state.inventorizationNumber,
+            factoryManufacturer: this.state.factoryManufacturer,
+            examinationPeriod: this.state.examinationPeriod,
+            workMode: this.state.workMode,
+            installationPlace: this.state.installationPlace,
+            technicalMaintenanceFirst: this.state.technicalMaintenanceFirst,
+            technicalMaintenanceSecond: this.state.technicalMaintenanceSecond,
+            inspection: this.state.inspection,
+            personResponsibleToFixedState: this.state.personResponsibleToFixedState,
+            personResponsibleForSupervision: this.state.personResponsibleForSupervision,
+            metalInspection: this.state.metalInspection,
+            mechanicalControl: this.state.mechanicalControl,
+            electricalParts: this.state.electricalParts,
+            owner: this.state.owner
+          };
+          this.props.addCranes(crane);
     }
 
     renderComponent() {
-        const {
-            craneType, loadCapacity, registerNumber, factoryNumber, inventorizationNumber, factoryManufacturer, examinationPeriod,
-            workMode, installationPlace, technicalMaintenanceFirst, technicalMaintenanceSecond, inspectionInsert, personResponsibleToFixedStateInsert,
-            personResponsibleForSupervisionInsert, metalInspection, mechanicalControl, electricalParts, owner
-        } = this.state;
-
         return (
             <div className="container">
                 <form className="row">
@@ -235,7 +216,7 @@ export class Form extends Component {
                                     <label>Лицо ответственное по надзору</label>
                                     <select className="form-control" name="personResponsobleForSupervision">
                                         {this.props.personResponsibleForSupervision.map(personResponsibleForSupervision => (
-                                            <option value={personResponsibleForSupervisionInsert} defaultValue="">{personResponsibleForSupervision.employeeFirstName}</option>
+                                            <option value={personResponsibleForSupervisionInsert} defaultValue="">{personResponsibleForSupervision.id}</option>
                                         ))}
                                     </select>
                                 </div>

@@ -62,21 +62,21 @@ class Cranes(models.Model):
     # Завод изготовитель
     factoryManufacturer = models.CharField(max_length=100, unique=True)
     # Срок освидетельствования
-    examinationPeriod = models.ForeignKey(ExaminationPeriodTechPassport, related_name="cranes", on_delete=models.CASCADE)
+    examinationPeriod = models.ForeignKey(ExaminationPeriodTechPassport, related_name="cranes", on_delete=models.CASCADE, null=True)
     # Режим работы
     workMode = models.CharField(max_length=50)
     # Место установки
     installationPlace = models.CharField(max_length=120)
     # ТО1 = models.ForeignKey(Album, related_name='tracks', on_delete=models.CASCADE)
-    technicalMaintenanceFirst = models.ForeignKey(FirstTechnicalMaintenance, related_name="cranes", on_delete=models.CASCADE)
+    technicalMaintenanceFirst = models.ForeignKey(FirstTechnicalMaintenance, related_name="cranes", on_delete=models.CASCADE, null=True)
     # ТО2 = models.ForeignKey(Album, related_name='tracks', on_delete=models.CASCADE)
-    technicalMaintenanceSecond = models.ForeignKey(SecondTechnicalMaintenance, related_name="cranes", on_delete=models.CASCADE)
+    technicalMaintenanceSecond = models.ForeignKey(SecondTechnicalMaintenance, related_name="cranes", on_delete=models.CASCADE, null=True)
     # Обследование
-    inspection = models.ForeignKey(Inspection, related_name="cranes", on_delete=models.CASCADE)
+    inspection = models.ForeignKey(Inspection, related_name="cranes", on_delete=models.CASCADE, null=True)
     # Лицо ответственное за исправленное состояние
-    personResponsibleToFixedState = models.ForeignKey(PersonResponsibleToFixedState,related_name="cranes", on_delete=models.CASCADE)
+    personResponsibleToFixedState = models.ForeignKey(PersonResponsibleToFixedState,related_name="cranes", on_delete=models.CASCADE, null=True)
     # Лицо ответственное по надзору
-    personResponsibleForSupervision = models.ForeignKey(PersonResponsibleForSupervision, related_name="cranes", on_delete=models.CASCADE)
+    personResponsibleForSupervision = models.ForeignKey(PersonResponsibleForSupervision, related_name="cranes", on_delete=models.CASCADE, null=True)
     # Контроль по металу
     metalInspection = models.CharField(max_length=100)
     # Механический контроль
