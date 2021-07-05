@@ -83,6 +83,5 @@ class Cranes(models.Model):
     mechanicalControl = models.CharField(max_length=100)
     # Электронная часть
     electricalParts = models.CharField(max_length=100)
-    #timestamp = models.DateTimeField(auto_now=False)
     # user?
     owner = models.ForeignKey(User, related_name="cranes", on_delete=models.CASCADE, null=True)

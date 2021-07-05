@@ -1,4 +1,4 @@
-import { GET_CRANES, DELETE_CRANE, ADD_CRANE } from '../actions/types';
+import { GET_CRANES, DELETE_CRANE, ADD_CRANE, UPDATE_CRANE } from '../actions/types';
 import { GET_EXAMINATION, DELETE_EXAMINATION, ADD_EXAMINATION } from "../actions/types";
 import { GET_TO1, GET_TO2, ADD_TO1, ADD_TO2, DELETE_TO1, DELETE_TO2, PUT_TO1, PUT_TO2 } from '../actions/types';
 import { GET_INSPECTION, ADD_INSPECTION, DELETE_INSPECTION, PUT_INSPECTION } from '../actions/types';
@@ -28,10 +28,21 @@ export default function(state = initialState, action) {
                 cranes: state.cranes.filter(cranes => cranes.id !== action.payload)
             };
         case ADD_CRANE:
-                return {
+            return {
                     ...state,
                     cranes: [...state.cranes, action.payload]
                 };
+        case UPDATE_CRANE:
+            const updatedCranes = state.cranes.map(item => {
+                if(item.id === action.id) {
+                    return { ...item, ...action.payload };
+                }
+                return item;
+            });
+            return {
+                ...state,
+                cranes: updatedCranes
+            };
         //Examination Period and passport # Срок освидетельствование и паспорт
         case GET_EXAMINATION:
             return {

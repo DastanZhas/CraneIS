@@ -1,8 +1,9 @@
 import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 
-import { GET_CRANES, DELETE_CRANE, ADD_CRANE } from "./types";
+import { GET_CRANES, DELETE_CRANE, ADD_CRANE, UPDATE_CRANE } from "./types";
 import { tokenConfig } from "./auth";
+import cranes from "../reducers/cranes";
 
 //GET CRANES
 export const getCranes = () => (dispatch, getState) => {
@@ -40,3 +41,14 @@ export const addCranes = (cranes) => (dispatch, getState) => {
 }
 
 //UPDATE CRANE (PUT)
+export const updateCranes = (id, cranes) => dispatch => {
+    axios.patch(`/api/cranes/${id}/`, cranes)
+    .then(res => {
+        dispatch(createMessage({ updateCrane: "Crane Updated!" }));
+        dispatch({
+            type: UPDATE_CRANE,
+            payload: res.data
+        });
+    })
+    .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+}

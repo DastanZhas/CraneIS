@@ -9,6 +9,7 @@ import Alerts from "./layout/Alerts";
 import Cranes from './cranes/Cranes';
 import Form from './cranes/Form';
 import AddCrane from './cranes/AddCrane';
+import CranesList from './cranes/CranesList';
 
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
@@ -41,7 +42,7 @@ class App extends React.Component {
                             <Alerts />
                             <Switch>
                                 {/* <PrivateRoute exact path="/" component={Main}/> */}
-                                <PrivateRoute path="/cranes" component={Cranes}/>
+                                <PrivateRoute path="/cranes" component={CranesList}/>
                                 <PrivateRoute path="/add-crane" component={AddCrane}/>
                                 {/* <Route path="/register" component={Register}/> */}
                                 <Route path="/" component={Login}/>
