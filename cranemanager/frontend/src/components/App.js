@@ -7,7 +7,6 @@ import AlertTemplate from "react-alert-template-basic";
 
 import Alerts from "./layout/Alerts";
 import Cranes from './cranes/Cranes';
-import Form from './cranes/Form';
 import AddCrane from './cranes/AddCrane';
 import CranesList from './cranes/CranesList';
 

@@ -1,34 +1,44 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { element } from "prop-types";
+import examination from '../../reducers/cranes';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Button, Dropdown, Form } from "react-bootstrap";
 import { addCranes } from '../../actions/cranes';
+import { getExamination } from "../../actions/examinationPeriodPassport";
+
+import { onExaminationAddClick } from "../../components/cranes/AddExamination";
+import AddExamination from "../../components/cranes/AddExamination";
 
 class AddCrane extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        craneType: "",
-        loadCapacity: "",
-        registerNumber: "",
-        factoryNumber: "",
-        inventorizationNumber: "",
-        factoryManufacturer: "",
-        examinationPeriod: "",
-        workMode: "",
-        installationPlace: "",
-        technicalMaintenanceFirst: "",
-        technicalMaintenanceSecond: "",
-        inspection: "",
-        personResponsibleToFixedState: "",
-        personResponsibleForSupervision: "",
-        metalInspection: "",
-        mechanicalControl: "",
-        electricalParts: "",
-        owner: ""
+      craneType: "",
+      loadCapacity: "",
+      registerNumber: "",
+      factoryNumber: "",
+      inventorizationNumber: "",
+      factoryManufacturer: "",
+      examinationPeriod: "",
+      workMode: "",
+      installationPlace: "",
+      technicalMaintenanceFirst: "",
+      technicalMaintenanceSecond: "",
+      inspection: "",
+      personResponsibleToFixedState: "",
+      personResponsibleForSupervision: "",
+      metalInspection: "",
+      mechanicalControl: "",
+      electricalParts: "",
+      owner: ""
     };
   }
+
+  componentDidMount() {
+    this.props.getExamination();
+  }
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -135,16 +145,16 @@ class AddCrane extends Component {
             />
           </Form.Group>
 
-          <Form.Group controlId="contentId">
-            <Form.Label>Срок освидетельствования</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={4}
-              name="examinationPeriod"
-              placeholder="Срок освидетельствования"
-              value={this.examinationPeriod}
-              onChange={this.onChange}
-            />
+          <Form.Group controlId="contentId" defaultValue="Choose...">
+            <Form.Control as="select" defaultValue="Choose...">
+              {this.props.examination.map(examination => (
+                  <option key={examination.id} value={this.examinationPeriod} >{examination.id}</option>
+                ))}
+            </Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="contentId" defaultValue="Choose...">
+            <AddExamination />
           </Form.Group>
 
           <Form.Group controlId="contentId">
@@ -288,9 +298,12 @@ class AddCrane extends Component {
 }
 
 AddCrane.propTypes = {
-  addCranes: PropTypes.func.isRequired
+  addCranes: PropTypes.func.isRequired,
+  getExamination: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  examination: state.cranes.examination,
+});
 
-export default connect(mapStateToProps, { addCranes })(withRouter(AddCrane));
+export default connect(mapStateToProps, { addCranes, getExamination })(withRouter(AddCrane));
