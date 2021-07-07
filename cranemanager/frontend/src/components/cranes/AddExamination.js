@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import { addExamination, getExamination } from "../../actions/examinationPeriodPassport";
+import AddCrane from "./AddCrane";
 
 class AddExamination extends Component {
     constructor(props) {
@@ -60,7 +61,7 @@ class AddExamination extends Component {
                 </div>
                 <Button variant="success" onClick={this.onExaminationAddClick}>
                     Add examination and crane passport
-        </Button>
+                </Button>
             </div>
         );
     }

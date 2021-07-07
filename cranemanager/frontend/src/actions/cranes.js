@@ -42,7 +42,7 @@ export const addCranes = (cranes) => (dispatch, getState) => {
 
 //UPDATE CRANE (PUT)
 export const updateCranes = (id, cranes) => dispatch => {
-    axios.patch(`/api/cranes/${id}/`, cranes)
+    axios.put(`/api/cranes/${id}/`, cranes)
     .then(res => {
         dispatch(createMessage({ updateCrane: "Crane Updated!" }));
         dispatch({

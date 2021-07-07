@@ -2,13 +2,14 @@ import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
-import {Provider as AlertProvider } from "react-alert";
+import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
 import Alerts from "./layout/Alerts";
 import Cranes from './cranes/Cranes';
 import AddCrane from './cranes/AddCrane';
 import CranesList from './cranes/CranesList';
+import UpdateCrane from './cranes/UpdateCrane';
 
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
@@ -18,6 +19,8 @@ import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
 import Main from "./Main";
+
+
 
 // Alert options
 const alertOptions = {
