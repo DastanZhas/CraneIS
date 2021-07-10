@@ -10,6 +10,6 @@ router.register('api/to1', FirstTechnicalMaintenanceViewSet, 'cranes')
 router.register('api/to2', SecondTechnicalMaintenanceViewSet, 'cranes')
 router.register('api/inspection', InspectionViewSet, 'cranes')
 router.register('api/personResponsibleFix', PersonResponsibleToFixedStateViewSet, 'cranes')
-router.register('api/personResponsibleVision', PersonResponsibleForSupervisionViewSet, 'cranes')
+router.register('api/personResponsibleVision', PersonResponsibleForSupervisionViewSet, basename='supervision')
 
 urlpatterns = router.urls

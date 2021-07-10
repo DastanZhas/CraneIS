@@ -5,12 +5,21 @@ from cranes.models import Cranes, ExaminationPeriodTechPassport, FirstTechnicalM
 class CranesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cranes
-        fields = '__all__'
+        fields = '__all__'    
 
 # Технический паспорт и сроки освидетельствования
 class ExaminationPeriodTechPassportSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExaminationPeriodTechPassport
+        fields = '__all__'
+
+# Serializer for retrieve data from examination table to cranes table
+# Сериалайзер для представления данных из таблицы examination на таблицу cranes
+class ExaminationListRetrieveSerializer(serializers.ModelSerializer):
+    examinationPeriod = ExaminationPeriodTechPassportSerializer()
+
+    class Meta:
+        model = Cranes
         fields = '__all__'
 
 # ТО 1

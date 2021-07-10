@@ -5,7 +5,7 @@ from datetime import datetime, date
 
 # Технический паспорт и сроки освидетельствования
 class ExaminationPeriodTechPassport(models.Model):
-    technicalPassportdownloadUrl = models.FileField(max_length=None, blank=False) # Изменить required to True
+    technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='files/', blank=False) # Изменить required to True
     examinationPeriodDate = models.DateTimeField(auto_now=False)
 
 # Техническое обслуживание 1 - ТО1
@@ -30,7 +30,7 @@ class Inspection(models.Model):
 
 # Лицо ответственное за исправленное состояние
 class PersonResponsibleToFixedState(models.Model):
-    personImage = models.ImageField(max_length=None, blank=False) # Изменить required to True
+    personImage = models.ImageField(max_length=None, upload_to='files/', blank=False)
     employeePost = models.CharField(max_length=100)
     orderNumber = models.IntegerField(unique=True)
     employeeFirstName = models.CharField(max_length=100)
@@ -40,13 +40,24 @@ class PersonResponsibleToFixedState(models.Model):
 
 # Лицо ответственное по надзору
 class PersonResponsibleForSupervision(models.Model):
-    personImage = models.ImageField(max_length=None, blank=False) # Изменить required to True
+    personImage = models.ImageField(max_length=None, upload_to='files/', blank=False) # Изменить required to True
     employeePost = models.CharField(max_length=100)
     orderNumber = models.IntegerField(unique=True)
     employeeFirstName = models.CharField(max_length=100)
     employeeSecondName = models.CharField(max_length=100)
     # Отчество
     employeePatronymic = models.CharField(max_length=100)
+
+class CraneQuerySet(models.QuerySet):
+    def find_by_title_in_qs(self, craneType):
+        return self.filter(title__icontains=craneType)
+
+class CranesManager(models.Manager):
+    def get_queryset(self):
+        return CraneQuerySet(self.model, using=self.db)
+
+    def find_by_title_in_qs(self, craneType):
+        return self.get_queryset().find_by_title_in_qs(craneType)
 
 class Cranes(models.Model):
     # Тип крана
@@ -80,7 +91,7 @@ class Cranes(models.Model):
     # Контроль по металу
     metalInspection = models.CharField(max_length=100)
     # Механический контроль
-    mechanicalControl = models.CharField(max_length=100)
+    mechanicalControl = models.TextField(max_length=100)
     # Электронная часть
     electricalParts = models.CharField(max_length=100)
     # user?
