@@ -5,32 +5,36 @@ from datetime import datetime, date
 
 # Технический паспорт и сроки освидетельствования
 class ExaminationPeriodTechPassport(models.Model):
-    technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='files/', blank=False) # Изменить required to True
+    technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='uploads/', blank=False) # Изменить required to True
     examinationPeriodDate = models.DateTimeField(auto_now=False)
+    examinationPeriodTitle = models.CharField(max_length=100)
+    examinationPeriodContent = models.TextField(max_length=250)
 
 # Техническое обслуживание 1 - ТО1
 class FirstTechnicalMaintenance(models.Model):
+    to1 = models.TextField(max_length=250)
     periodOfFirstTMfrom = models.DateTimeField(auto_now=False)
     periodOfFirstTMto = models.DateTimeField(auto_now=False)
 
 # Техническое обслуживание 2 - ТО2
 class SecondTechnicalMaintenance(models.Model):
+    to2 = models.TextField(max_length=250)
     periodOfSecondTMfrom = models.DateTimeField(auto_now=False)
     periodOfSecondTMto = models.DateTimeField(auto_now=False)
     # Ведомость дефектов
-    defectsStatement = models.CharField(max_length=200)
+    defectsStatement = models.TextField(max_length=250)
     # Ведомость материалов
-    materialsStatement = models.CharField(max_length=200)
+    materialsStatement = models.TextField(max_length=250)
 
 # Обследование и сроки
 class Inspection(models.Model):
     periodInspectionfrom = models.DateTimeField(auto_now=False)
     periodInspectionto = models.DateTimeField(auto_now=False)
-    inspection = models.CharField(max_length=200)
+    inspection = models.TextField(max_length=250)
 
 # Лицо ответственное за исправленное состояние
 class PersonResponsibleToFixedState(models.Model):
-    personImage = models.ImageField(max_length=None, upload_to='files/', blank=False)
+    personImage = models.ImageField(max_length=None, upload_to='uploads/images', blank=False)
     employeePost = models.CharField(max_length=100)
     orderNumber = models.IntegerField(unique=True)
     employeeFirstName = models.CharField(max_length=100)
@@ -40,7 +44,7 @@ class PersonResponsibleToFixedState(models.Model):
 
 # Лицо ответственное по надзору
 class PersonResponsibleForSupervision(models.Model):
-    personImage = models.ImageField(max_length=None, upload_to='files/', blank=False) # Изменить required to True
+    personImage = models.ImageField(max_length=None, upload_to='uploads/images', blank=False) # Изменить required to True
     employeePost = models.CharField(max_length=100)
     orderNumber = models.IntegerField(unique=True)
     employeeFirstName = models.CharField(max_length=100)
@@ -89,10 +93,10 @@ class Cranes(models.Model):
     # Лицо ответственное по надзору
     personResponsibleForSupervision = models.ForeignKey(PersonResponsibleForSupervision, related_name="cranes", on_delete=models.CASCADE, null=True)
     # Контроль по металу
-    metalInspection = models.CharField(max_length=100)
+    metalInspection = models.TextField(max_length=250)
     # Механический контроль
-    mechanicalControl = models.TextField(max_length=100)
+    mechanicalControl = models.TextField(max_length=250)
     # Электронная часть
-    electricalParts = models.CharField(max_length=100)
+    electricalParts = models.TextField(max_length=250)
     # user?
     owner = models.ForeignKey(User, related_name="cranes", on_delete=models.CASCADE, null=True)

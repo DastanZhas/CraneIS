@@ -22,25 +22,26 @@ const Main = (props) => {
     return (
         <div className={toggle ? "body-pd" : null}>
             <header className={toggle ? "header body-pd" : "header"} id="header">
-                <div className={toggle ? "header_toggle bx-x" : "header_toggle"} onClick={onCl}> 
-                    <i className={toggle ?  "fas fa-times" :"fas fa-bars"} id="header-toggle"></i> 
+                <div className={toggle ? "header_toggle bx-x" : "header_toggle"} onClick={onCl}>
+                    <i className={toggle ? "fas fa-times" : "fas fa-bars"} id="header-toggle"></i>
                 </div>
             </header>
             <div className={toggle ? "l-navbar show" : "l-navbar"} id="nav-bar">
                 <nav className="nav">
-                    <div> 
+                    <div>
                         <p href="#" className="nav_logo"> <i className="fas fa-compass"></i> <span className="nav_logo-name">Меню</span> </p>
-                        <div className="nav_list" > 
-                            <NavLink to="/cranes" className="nav_link" activeClassName="nav_link active"> <i className="fas fa-columns"></i> <span className="nav_name">Краны</span> </NavLink> 
-                            <NavLink to="/add-crane" className="nav_link" activeClassName="nav_link active"> <i className="fas fa-edit"></i> <span className="nav_name">Добавить кран</span> </NavLink> 
-                            <a href="#" className="nav_link"> <i className="fas fa-user"></i> <span className="nav_name">Пользователи</span> </a> 
+                        <div className="nav_list" >
+                            <NavLink to="/cranes" className="nav_link" activeClassName="nav_link active"> <i className="fas fa-columns"></i> <span className="nav_name">Краны</span> </NavLink>
+                            <NavLink to="/add-crane" className="nav_link" activeClassName="nav_link active"> <i className="fas fa-edit"></i> <span className="nav_name">Добавить кран</span> </NavLink>
+                            <NavLink to="/:id/" className="nav_link" activeClassName="nav_link active"> <i className="fas fa-list"></i> <span className="nav_name">Детали о кране</span> </NavLink>
+                            <a href="#" className="nav_link"> <i className="fas fa-user"></i> <span className="nav_name">Пользователи</span> </a>
                         </div>
-                    </div> 
-                    <div>   
+                    </div>
+                    <div>
                         {
                             isAuthenticated &&
-                            <a onClick={props.logout} className="nav_link"> 
-                                <i className="fas fa-sign-out-alt"></i> 
+                            <a onClick={props.logout} className="nav_link">
+                                <i className="fas fa-sign-out-alt"></i>
                                 <span className="nav_name">
                                     Выйти
                                 </span>

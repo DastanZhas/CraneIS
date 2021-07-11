@@ -1,10 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import Image from 'react-bootstrap/Image'
+import { Link } from 'react-router-dom';
 import PropTypes, { element } from 'prop-types';
 import { getCranes, deleteCranes } from '../../actions/cranes';
 import { getExamination } from '../../actions/examinationPeriodPassport';
+import { getPersonResponsibleToFixedState } from '../../actions/personResponsibleFixedState';
 import cranes from '../../reducers/cranes';
 import examination from '../../reducers/cranes';
+import personResponsibleToFixedState from '../../reducers/cranes';
 import Modal from './Modal';
 
 export class Cranes extends Component {
@@ -15,12 +19,14 @@ export class Cranes extends Component {
     static propTypes = {
         getExamination: PropTypes.func.isRequired,
         getCranes: PropTypes.func.isRequired,
-        deleteCranes: PropTypes.func.isRequired
+        deleteCranes: PropTypes.func.isRequired,
+        getPersonResponsibleToFixedState: PropTypes.func.isRequired
     }
 
     componentDidMount() {
         this.props.getCranes();
         this.props.getExamination();
+        this.props.getPersonResponsibleToFixedState();
     }
 
     showModal = (e) => {
@@ -39,39 +45,30 @@ export class Cranes extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-12 mt-4 mb-4">
+                            <h1>----</h1>
                             <h2>Cranes</h2>
                             <div className="table-responsive">
                                 <table className="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Crane Type</th>
-                                            <th>metalInspection</th>
-                                            <th>Manufacturer Factory</th>
-                                            <th>1</th>
-                                            <th>2</th>
+                                            <th>Post</th>
+                                            <th>Name</th>
+                                            <th>Image</th>
                                             <th />
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        { this.props.examination.map(examination =>  (
-                                            <tr key={examination.id}>
-                                                <td>{examination.id}</td>
-                                                <td>{examination.technicalPassportdownloadUrl}</td>
-                                                <td>{examination.examinationPeriodDate}</td>
-                                                {/* <td>{cranes.factoryManufacturer}</td> */}
-                                                <td className="btn-cranes"><button className="btn btn-md btn-primary" onClick={this.showModal} value={examination.id}>Подробнее</button></td>
+                                        { this.props.cranes.map(crane =>  (
+                                            <tr key={crane.id}>
+                                                <td>{crane.id}</td>
+                                                <td>{crane.registerNumber}</td>
+                                                <td>{crane.electricalParts}</td>
+                                                {/* <img src={personResponsibleFixedState.personImage} style={{width: 100, height: 100}} /> */}
+                                                {/* <Image src={personResponsibleFixedState.personImage} roundedCircle style={{width: 100, height: 100}} /> */}
+                                                <td className="btn-cranes"><Link className="btn btn-md btn-primary" to={`/${crane.id}/detail`}>Подробнее</Link></td>
                                             </tr>
                                         )) 
                                         }
-                                    </tbody>
-                                    <tbody>
-                                        { this.props.cranes.map(cranes => (
-                                            <tr key={cranes.id}>
-                                                {/* <tr>{cranes.id}</tr>
-                                                <tr>{cranes.craneType}</tr> */}
-                                            </tr>
-                                        )) }
                                     </tbody>
                                 </table>
                             </div>
@@ -94,7 +91,8 @@ export class Cranes extends Component {
 
 const mapStateToProps = state => ({
     cranes: state.cranes.cranes,
-    examination: state.cranes.examination
+    examination: state.cranes.examination,
+    personResponsibleToFixedState: state.cranes.personResponsibleToFixedState
 });
 
-export default connect(mapStateToProps, { getCranes, deleteCranes, getExamination })(Cranes);
+export default connect(mapStateToProps, { getCranes, deleteCranes, getExamination, getPersonResponsibleToFixedState })(Cranes);

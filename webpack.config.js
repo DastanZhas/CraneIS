@@ -2,7 +2,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.scss$/,
+                test: /\.scss|sass|less|css$/,
                 use: [
                   // Creates `style` nodes from JS strings
                   "style-loader",

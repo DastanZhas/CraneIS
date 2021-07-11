@@ -71,6 +71,8 @@ class AddCrane extends Component {
   render() {
     return (
       <div>
+        <h1>------</h1>
+        <br></br>
         <h2>Add new crane</h2>
         <Form>
           <Form.Group controlId="contentId">
@@ -153,9 +155,9 @@ class AddCrane extends Component {
             </Form.Control>
           </Form.Group>
 
-          <Form.Group controlId="contentId" defaultValue="Choose...">
+          {/* <Form.Group controlId="contentId" defaultValue="Choose...">
             <AddExamination />
-          </Form.Group>
+          </Form.Group> */}
 
           <Form.Group controlId="contentId">
             <Form.Label>Режим работы</Form.Label>

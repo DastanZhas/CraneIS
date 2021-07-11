@@ -7,9 +7,11 @@ import AlertTemplate from "react-alert-template-basic";
 
 import Alerts from "./layout/Alerts";
 import Cranes from './cranes/Cranes';
-import AddCrane from './cranes/AddCrane';
-import CranesList from './cranes/CranesList';
-import UpdateCrane from './cranes/UpdateCrane';
+import AddCrane from './AddCrane';
+// import AddCrane from '../components/cranes/AddCrane';
+import CraneDetail from './CraneDetail';
+import UpdateCrane from './UpdateCrane';
+import ShowCrane from './ShowCrane';
 
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
@@ -44,8 +46,10 @@ class App extends React.Component {
                             <Alerts />
                             <Switch>
                                 {/* <PrivateRoute exact path="/" component={Main}/> */}
-                                <PrivateRoute path="/cranes" component={CranesList}/>
+                                <PrivateRoute path="/cranes" component={Cranes}/>
                                 <PrivateRoute path="/add-crane" component={AddCrane}/>
+                                <PrivateRoute path="/:id/detail" component={CraneDetail}/>
+                                <PrivateRoute path="/:id/update" component={UpdateCrane}/>
                                 {/* <Route path="/register" component={Register}/> */}
                                 <Route path="/" component={Login}/>
                             </Switch>

@@ -34,6 +34,7 @@ class CranesList extends Component {
 
     return (
       <div className='ui relaxed divided list' style={{ marginTop: '2rem' }}>
+        <h1>---</h1>
         {this.props.cranes.map(cranes => (
           <div className='item' key={cranes.id}>
             <i className='large calendar outline middle aligned icon' />
