@@ -16,6 +16,17 @@ export const getCranes = () => (dispatch, getState) => {
     }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
 
+//GET CRANES
+export const getCranesId = async () => (dispatch, getState) => {
+    axios.get("/api/cranes/1/", tokenConfig(getState))
+    .then(res => {
+        dispatch({
+            type: GET_CRANES,
+            payload: res.data
+        });
+    }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+}
+
 //DELETE CRANE
 export const deleteCranes = (id) => (dispatch, getState) => {
     axios.delete(`/api/cranes/${id}/`, tokenConfig(getState))
@@ -52,3 +63,5 @@ export const updateCranes = (id, cranes) => dispatch => {
     })
     .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
+
+// export const findByinventorizationNumber = inventorizationNumber

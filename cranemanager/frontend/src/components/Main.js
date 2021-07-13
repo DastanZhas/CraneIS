@@ -33,7 +33,6 @@ const Main = (props) => {
                         <div className="nav_list" >
                             <NavLink to="/cranes" className="nav_link" activeClassName="nav_link active"> <i className="fas fa-columns"></i> <span className="nav_name">Краны</span> </NavLink>
                             <NavLink to="/add-crane" className="nav_link" activeClassName="nav_link active"> <i className="fas fa-edit"></i> <span className="nav_name">Добавить кран</span> </NavLink>
-                            <NavLink to="/:id/" className="nav_link" activeClassName="nav_link active"> <i className="fas fa-list"></i> <span className="nav_name">Детали о кране</span> </NavLink>
                             <a href="#" className="nav_link"> <i className="fas fa-user"></i> <span className="nav_name">Пользователи</span> </a>
                         </div>
                     </div>

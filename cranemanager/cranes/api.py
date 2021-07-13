@@ -29,7 +29,8 @@ from .serializers import ExaminationListRetrieveSerializer
 # Cranes Viewset
 class CranesViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
+        #permissions.AllowAny
     ]
     #queryset = Cranes.objects.all().filter(craneType='asda7asd')
     queryset = Cranes.objects.all()
@@ -48,42 +49,42 @@ class CranesViewSet(viewsets.ModelViewSet):
 
 class ExaminationPeriodTechPassportViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     queryset = ExaminationPeriodTechPassport.objects.all()
     serializer_class = ExaminationPeriodTechPassportSerializer
 
 class FirstTechnicalMaintenanceViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     queryset = FirstTechnicalMaintenance.objects.all()
     serializer_class = FirstTechnicalMaintenanceSerializer
 
 class SecondTechnicalMaintenanceViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     queryset = SecondTechnicalMaintenance.objects.all()
     serializer_class = SecondTechnicalMaintenanceSerializer
 
 class InspectionViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     queryset = Inspection.objects.all()
     serializer_class = InspectionSerializer
 
 class PersonResponsibleToFixedStateViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     queryset = PersonResponsibleToFixedState.objects.all()
     serializer_class = PersonResponsibleToFixedStateSerializer
 
 class PersonResponsibleForSupervisionViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     queryset = PersonResponsibleForSupervision.objects.all()
     serializer_class = PersonResponsibleForSupervisionSerializer

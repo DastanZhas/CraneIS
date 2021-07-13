@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { tokenConfig } from '../actions/auth';
+import { getCranes } from '../actions/cranes';
+
 
 const CraneDetail = () => {
 
@@ -10,14 +13,13 @@ const CraneDetail = () => {
     const { id } = useParams();
 
     const getSingleCrane = async () => {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/cranes/${id}/`)
-        // const { data } = await axios.get('http://127.0.0.1:8000/api/cranes/1/')
-        console.log(data)
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/cranes/${id}/`)       
         setCrane(data)
     }
 
     useEffect(() => {
         getSingleCrane();
+        getCranes();
     }, [])
     
     return (
