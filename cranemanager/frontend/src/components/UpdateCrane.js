@@ -2,6 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button, Dropdown, Form } from "react-bootstrap";
 import { useHistory, useParams } from "react-router";
+import { useDispatch } from "react-redux";
+import { tokenConfig } from "../actions/auth";
+import store from "../store";
+
 
 
 const UpdateCrane = () => {
@@ -28,8 +32,10 @@ const UpdateCrane = () => {
 
     const { id } = useParams();
 
-    const loadCranes =  async () => {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/cranes/${id}/`);
+    const dispatch = useDispatch();
+
+    const loadCranes = () => async (dispatch, getState) => {
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState));
         console.log(data)
 
         setCraneType(data.craneType)
@@ -53,10 +59,10 @@ const UpdateCrane = () => {
     }
 
     useEffect(() => {
-        loadCranes();
+        store.dispatch(loadCranes());
     }, [])
 
-    const UpdateCraneInfo = async () => {
+    const UpdateCraneInfo = () => async (dispatch, getState) => {
         let formField = new FormData();
         
         formField.append('craneType', craneType)
@@ -78,14 +84,30 @@ const UpdateCrane = () => {
         formField.append('electricalParts', electricalParts)
         formField.append('owner', owner)
 
-        await axios({
-            method: 'PUT',
-            url: `/api/cranes/${id}/`,
-            data: formField
-        }).then(response => {
-            console.log(response.data)
-            history.push('/')
-        })
+
+        await axios
+            .put(`/api/cranes/${id}/`, formField, tokenConfig(getState))
+            .then(response => {
+                console.log(response.data)
+                history.push('/')
+            })
+
+        // const { data } = await axios
+        // .get(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState))
+        // setCrane(data);
+
+        // await axios({
+        //     method: 'PUT',
+        //     url: `/api/cranes/${id}/`,
+        //     data: formField
+        // }).then(response => {
+        //     console.log(response.data)
+        //     history.push('/')
+        // })
+    }
+
+    const handleClick = () => {
+        store.dispatch(UpdateCraneInfo());
     }
 
     return (
@@ -323,7 +345,7 @@ const UpdateCrane = () => {
                     />
                 </Form.Group>
             </Form>
-            <Button variant="success" onClick={UpdateCraneInfo}>
+            <Button variant="success" onClick={handleClick}>
                 Сохранить
         </Button>
         </div>
