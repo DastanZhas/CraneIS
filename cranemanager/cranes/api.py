@@ -29,8 +29,8 @@ from .serializers import ExaminationListRetrieveSerializer
 # Cranes Viewset
 class CranesViewSet(viewsets.ModelViewSet):
     permission_classes = [
+        # permissions.IsAuthenticated
         permissions.IsAuthenticated
-        #permissions.AllowAny
     ]
     #queryset = Cranes.objects.all().filter(craneType='asda7asd')
     queryset = Cranes.objects.all()

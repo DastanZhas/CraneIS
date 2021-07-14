@@ -3,25 +3,36 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { tokenConfig } from '../actions/auth';
-import { getCranes } from '../actions/cranes';
+import store from '../store';
+import { useDispatch } from "react-redux";
 
 
 const CraneDetail = () => {
 
     const [crane, setCrane] = useState("")
+    const [examination, setExamination] = useState("")
 
     const { id } = useParams();
 
-    const getSingleCrane = async () => {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/cranes/${id}/`)       
-        setCrane(data)
+    const dispatch = useDispatch();
+
+    const getSingleCrane = () => async (dispatch, getState) => {
+        const { data } = await axios
+                .get(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState))
+                setCrane(data);
+    }
+
+    const getSingleExamination = () => async (dispatch, getState) => {
+        const { data } = await axios
+                .get(`http://127.0.0.1:8000/api/examination/${id}/`, tokenConfig(getState))
+                setExamination(data);
     }
 
     useEffect(() => {
-        getSingleCrane();
-        getCranes();
+        store.dispatch(getSingleCrane());
+        store.dispatch(getSingleExamination());
     }, [])
-    
+
     return (
         <div>
             <br />
@@ -33,7 +44,14 @@ const CraneDetail = () => {
                 <p>{crane.factoryNumber}</p>
                 <p>{crane.inventorizationNumber}</p>
                 <p>{crane.factoryManufacturer}</p>
-                <p>{crane.examinationPeriod}</p>
+                <div>
+                    <strong>-----</strong>
+                    <p>{crane.examinationPeriod}</p>
+                    <p>{examination.examinationPeriodDate}</p>
+                    <p>{examination.examinationPeriodTitle}</p>
+                    <p>{examination.examinationPeriodContent}</p>
+                    <strong>-----</strong>
+                </div>
                 <p>{crane.workMode}</p>
                 <p>{crane.installationPlace}</p>
                 <p>{crane.technicalMaintenanceFirst}</p>
@@ -46,8 +64,8 @@ const CraneDetail = () => {
                 <p>{crane.electricalParts}</p>
                 <p>{crane.owner}</p>
 
-                
-                
+
+
                 <Link className="btn btn-warning" to={`/${crane.id}/update`}>Редактировать</Link>
                 <br />
                 <Link className="btn btn-danger" to="/cranes">Удалить</Link>
