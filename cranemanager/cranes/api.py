@@ -25,6 +25,7 @@ PersonResponsibleForSupervision )
 
 from .models import CraneQuerySet, CranesManager
 from .serializers import ExaminationListRetrieveSerializer
+from django.http import HttpResponse
 
 # Cranes Viewset
 class CranesViewSet(viewsets.ModelViewSet):
@@ -81,6 +82,15 @@ class PersonResponsibleToFixedStateViewSet(viewsets.ModelViewSet):
     ]
     queryset = PersonResponsibleToFixedState.objects.all()
     serializer_class = PersonResponsibleToFixedStateSerializer
+
+    def post(self, request, *args, **kwargs):
+        personImage = request.data['personImage']
+        employeePost = request.data['employeePost']
+        orderNumber = request.data['orderNumber']
+        employeeFirstName = request.data['employeeFirstName']
+        employeeSecondName = request.data['employeeSecondName']
+        employeePatronymic = request.data['employeePatronymic']
+        return HttpResponse({'message': 'person created'}, status=200)
 
 class PersonResponsibleForSupervisionViewSet(viewsets.ModelViewSet):
     permission_classes = [

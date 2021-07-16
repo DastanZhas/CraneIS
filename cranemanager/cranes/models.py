@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from datetime import datetime, date
+from datetime import datetime, datetime
 
 # Технический паспорт и сроки освидетельствования
 class ExaminationPeriodTechPassport(models.Model):
-    technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='uploads/', blank=False) # Изменить required to True
+    technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='uploads/', blank=False, null=False) # Изменить required to True
     examinationPeriodDate = models.DateTimeField(auto_now=False)
     examinationPeriodTitle = models.CharField(max_length=100)
     examinationPeriodContent = models.TextField(max_length=250)
@@ -34,7 +34,7 @@ class Inspection(models.Model):
 
 # Лицо ответственное за исправленное состояние
 class PersonResponsibleToFixedState(models.Model):
-    personImage = models.ImageField(max_length=None, upload_to='uploads/images', blank=False)
+    personImage = models.ImageField(max_length=None, upload_to='uploads/images', null=False, blank=False)
     employeePost = models.CharField(max_length=100)
     orderNumber = models.IntegerField(unique=True)
     employeeFirstName = models.CharField(max_length=100)
@@ -44,7 +44,7 @@ class PersonResponsibleToFixedState(models.Model):
 
 # Лицо ответственное по надзору
 class PersonResponsibleForSupervision(models.Model):
-    personImage = models.ImageField(max_length=None, upload_to='uploads/images', blank=False) # Изменить required to True
+    personImage = models.ImageField(max_length=None, upload_to='uploads/images', null=False, blank=False) # Изменить required to True
     employeePost = models.CharField(max_length=100)
     orderNumber = models.IntegerField(unique=True)
     employeeFirstName = models.CharField(max_length=100)

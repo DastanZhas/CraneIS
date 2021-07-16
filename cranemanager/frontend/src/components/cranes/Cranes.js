@@ -9,7 +9,6 @@ import { getPersonResponsibleToFixedState } from '../../actions/personResponsibl
 import cranes from '../../reducers/cranes';
 import examination from '../../reducers/cranes';
 import personResponsibleToFixedState from '../../reducers/cranes';
-import Modal from './Modal';
 
 export class Cranes extends Component {
     state = {
@@ -20,13 +19,12 @@ export class Cranes extends Component {
         getExamination: PropTypes.func.isRequired,
         getCranes: PropTypes.func.isRequired,
         deleteCranes: PropTypes.func.isRequired,
-        getPersonResponsibleToFixedState: PropTypes.func.isRequired
     }
 
     componentDidMount() {
         this.props.getCranes();
         this.props.getExamination();
-        this.props.getPersonResponsibleToFixedState();
+        // this.props.getPersonResponsibleToFixedState();
     }
 
     showModal = (e) => {
@@ -75,7 +73,6 @@ export class Cranes extends Component {
                          </div>
                     </div>
                 </div>
-                <Modal active={this.state.modal} hideModal={this.hideModal}/>
             </div>
         )
     }
@@ -92,7 +89,6 @@ export class Cranes extends Component {
 const mapStateToProps = state => ({
     cranes: state.cranes.cranes,
     examination: state.cranes.examination,
-    personResponsibleToFixedState: state.cranes.personResponsibleToFixedState
 });
 
-export default connect(mapStateToProps, { getCranes, deleteCranes, getExamination, getPersonResponsibleToFixedState })(Cranes);
+export default connect(mapStateToProps, { getCranes, deleteCranes, getExamination })(Cranes);

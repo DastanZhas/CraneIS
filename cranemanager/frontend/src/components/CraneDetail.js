@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { tokenConfig } from '../actions/auth';
 import store from '../store';
 import { useDispatch } from "react-redux";
+import { DELETE_CRANE } from '../actions/types';
+import { returnErrors, createMessage } from "../actions/messages";
 
 
 const CraneDetail = () => {
@@ -28,10 +30,24 @@ const CraneDetail = () => {
                 setExamination(data);
     }
 
+    const deleteSingleCrane = () => async (dispatch, getState) => {
+        await axios
+        .delete(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState))
+        .then((response) => {
+            dispatch(createMessage({ craneDelete: "Crane was deleted" }));
+            dispatch({type: DELETE_CRANE})
+            history.push('/')
+        }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+    }
+
     useEffect(() => {
         store.dispatch(getSingleCrane());
         store.dispatch(getSingleExamination());
     }, [])
+
+    const handleDeleteClick = () => {
+        store.dispatch(deleteSingleCrane());
+    }
 
     return (
         <div>
@@ -68,7 +84,7 @@ const CraneDetail = () => {
 
                 <Link className="btn btn-warning" to={`/${crane.id}/update`}>Редактировать</Link>
                 <br />
-                <Link className="btn btn-danger" to="/cranes">Удалить</Link>
+                <Link className="btn btn-danger" to="/cranes" onClick={handleDeleteClick}>Удалить</Link>
                 <br />
                 <Link className="btn btn-primary" to="/cranes">Назад</Link>
             </div>

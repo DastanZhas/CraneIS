@@ -91,19 +91,6 @@ const UpdateCrane = () => {
                 console.log(response.data)
                 history.push('/')
             })
-
-        // const { data } = await axios
-        // .get(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState))
-        // setCrane(data);
-
-        // await axios({
-        //     method: 'PUT',
-        //     url: `/api/cranes/${id}/`,
-        //     data: formField
-        // }).then(response => {
-        //     console.log(response.data)
-        //     history.push('/')
-        // })
     }
 
     const handleClick = () => {
