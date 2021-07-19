@@ -1,3 +1,4 @@
+from django.db.models import base
 from rest_framework import routers
 from .api import CranesViewSet, ExaminationPeriodTechPassportViewSet, FirstTechnicalMaintenanceViewSet, SecondTechnicalMaintenanceViewSet, InspectionViewSet
 from .api import PersonResponsibleToFixedStateViewSet, PersonResponsibleForSupervisionViewSet

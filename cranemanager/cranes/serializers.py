@@ -5,7 +5,7 @@ from cranes.models import Cranes, ExaminationPeriodTechPassport, FirstTechnicalM
 class CranesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cranes
-        fields = '__all__'    
+        fields = '__all__'   
 
 # Технический паспорт и сроки освидетельствования
 class ExaminationPeriodTechPassportSerializer(serializers.ModelSerializer):

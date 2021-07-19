@@ -1,0 +1,22 @@
+npm install -g psycopg2
+
+
+cd cranemanager
+python manage.py startapp frontend
+mkdir src/components
+cd frontend
+mkdir static/frontend
+mkdir templates/frontend
+
+npm init -y
+npm i -D webpack webpack-cli
+npm i -D @babel/core babel-loader @babel/preset-env @babel/preset-react babel-plugin-transform-class-properties
+
+
+
+
+npm i redux react-redux redux-thunk redux-devtools-extension
+
+npm i axios
+
+pip freeze > requirements.txt

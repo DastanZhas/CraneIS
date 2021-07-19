@@ -1,19 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import Image from 'react-bootstrap/Image'
 import { Link } from 'react-router-dom';
 import PropTypes, { element } from 'prop-types';
 import { getCranes, deleteCranes } from '../../actions/cranes';
 import { getExamination } from '../../actions/examinationPeriodPassport';
-import { getPersonResponsibleToFixedState } from '../../actions/personResponsibleFixedState';
-import cranes from '../../reducers/cranes';
-import examination from '../../reducers/cranes';
-import personResponsibleToFixedState from '../../reducers/cranes';
+
 
 export class Cranes extends Component {
-    state = {
-        modal: false,
-    }
 
     static propTypes = {
         getExamination: PropTypes.func.isRequired,
@@ -27,23 +20,12 @@ export class Cranes extends Component {
         // this.props.getPersonResponsibleToFixedState();
     }
 
-    showModal = (e) => {
-        localStorage.setItem("craneItem", e.currentTarget.value);
-
-        this.setState({modal: true});
-    }
-
-    hideModal = () => {
-        this.setState({modal: false});
-    }
-
     renderComponent() {
         return (
             <div className="cranes">
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-12 mt-4 mb-4">
-                            <h1>----</h1>
                             <h2>Cranes</h2>
                             <div className="table-responsive">
                                 <table className="table table-bordered table-striped">

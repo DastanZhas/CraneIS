@@ -19,7 +19,7 @@ export const getExamination = () => (dispatch, getState) => {
 export const addExamination = (examination) => (dispatch, getState) => {
     axios.post("/api/examination/", examination, tokenConfig(getState))
     .then(res => {
-        dispatch(createMessage({ addCrane: "Examination passport and period Added" }));
+        dispatch(createMessage({ addExamination: "Examination passport and period Added" }));
         dispatch({
             type: ADD_EXAMINATION,
             payload: res.data

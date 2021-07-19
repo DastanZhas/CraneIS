@@ -5,13 +5,16 @@ import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
+
 import Alerts from "./layout/Alerts";
+
 import Cranes from './cranes/Cranes';
-import AddCrane from './AddCrane';
-// import AddCrane from '../components/cranes/AddCrane';
-import CraneDetail from './CraneDetail';
-import UpdateCrane from './UpdateCrane';
-import ShowCrane from './ShowCrane';
+import AddCrane from './cranes/AddCrane';
+import CraneDetail from './cranes/CraneDetail';
+import UpdateCrane from './cranes/UpdateCrane';
+
+import ExaminationDetail from './examinationTechpassport/ExaminationDetail.js';
+import AddExamination from './examinationTechpassport/AddExamination';
 
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
@@ -21,7 +24,6 @@ import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
 import Main from "./Main";
-
 
 
 // Alert options
@@ -46,8 +48,8 @@ class App extends React.Component {
                             <Alerts />
                             <Switch>
                                 {/* <PrivateRoute exact path="/" component={Main}/> */}
-                                <PrivateRoute path="/cranes" component={Cranes}/>
                                 <PrivateRoute path="/add-crane" component={AddCrane}/>
+                                <PrivateRoute path="/cranes" component={Cranes}/>
                                 <PrivateRoute path="/:id/detail" component={CraneDetail}/>
                                 <PrivateRoute path="/:id/update" component={UpdateCrane}/>
                                 {/* <Route path="/register" component={Register}/> */}

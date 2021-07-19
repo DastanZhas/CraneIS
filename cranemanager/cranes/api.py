@@ -8,7 +8,7 @@ from cranes.models import (
 
 from rest_framework import viewsets, permissions
 from .serializers import ( 
-    CranesSerializer, 
+    CranesSerializer,
     ExaminationPeriodTechPassportSerializer, 
     FirstTechnicalMaintenanceSerializer, 
     SecondTechnicalMaintenanceSerializer, 
@@ -30,55 +30,55 @@ from django.http import HttpResponse
 # Cranes Viewset
 class CranesViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        # permissions.IsAuthenticated
-        permissions.IsAuthenticated
+        # permissions.AllowAny
+        permissions.AllowAny
     ]
     #queryset = Cranes.objects.all().filter(craneType='asda7asd')
     queryset = Cranes.objects.all()
     serializer_class = CranesSerializer
 
-    # action_to_serializer = {
-    #     "list": ExaminationListRetrieveSerializer,
-    #     "retrieve": ExaminationListRetrieveSerializer
-    # }
+    action_to_serializer = {
+        "list": ExaminationListRetrieveSerializer,
+        "retrieve": ExaminationListRetrieveSerializer
+    }
 
-    # def get_serializer_class(self):
-    #     return self.action_to_serializer.get(
-    #         self.action,
-    #         self.serializer_class
-    #     )
+    def get_serializer_class(self):
+        return self.action_to_serializer.get(
+            self.action,
+            self.serializer_class
+        )
 
 class ExaminationPeriodTechPassportViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.AllowAny
     ]
     queryset = ExaminationPeriodTechPassport.objects.all()
     serializer_class = ExaminationPeriodTechPassportSerializer
 
 class FirstTechnicalMaintenanceViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.AllowAny
     ]
     queryset = FirstTechnicalMaintenance.objects.all()
     serializer_class = FirstTechnicalMaintenanceSerializer
 
 class SecondTechnicalMaintenanceViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.AllowAny
     ]
     queryset = SecondTechnicalMaintenance.objects.all()
     serializer_class = SecondTechnicalMaintenanceSerializer
 
 class InspectionViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.AllowAny
     ]
     queryset = Inspection.objects.all()
     serializer_class = InspectionSerializer
 
 class PersonResponsibleToFixedStateViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.AllowAny
     ]
     queryset = PersonResponsibleToFixedState.objects.all()
     serializer_class = PersonResponsibleToFixedStateSerializer
@@ -94,7 +94,7 @@ class PersonResponsibleToFixedStateViewSet(viewsets.ModelViewSet):
 
 class PersonResponsibleForSupervisionViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.AllowAny
     ]
     queryset = PersonResponsibleForSupervision.objects.all()
     serializer_class = PersonResponsibleForSupervisionSerializer

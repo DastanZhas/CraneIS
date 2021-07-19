@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'cranemanager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'CraneIS',
         'USER': 'postgres',
         'PASSWORD': 'dastan',
         'HOST': 'localhost',
