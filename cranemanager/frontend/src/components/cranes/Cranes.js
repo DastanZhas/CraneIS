@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 import PropTypes, { element } from 'prop-types';
 import { getCranes, deleteCranes } from '../../actions/cranes';
 import { getExamination } from '../../actions/examinationPeriodPassport';
+import { cranes, examination } from '../../reducers/cranes';
 
 
 export class Cranes extends Component {
@@ -38,21 +40,20 @@ export class Cranes extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        { this.props.cranes.map(crane =>  (
-                                            <tr key={crane.id}>
-                                                <td>{crane.id}</td>
-                                                <td>{crane.registerNumber}</td>
-                                                <td>{crane.electricalParts}</td>
-                                                {/* <img src={personResponsibleFixedState.personImage} style={{width: 100, height: 100}} /> */}
-                                                {/* <Image src={personResponsibleFixedState.personImage} roundedCircle style={{width: 100, height: 100}} /> */}
+                                        {this.props.cranes.map(crane => (
+                                            <tr key={crane.personResponsibleToFixedState.id}>
+                                                <td>{crane.personResponsibleToFixedState.employeePost}</td>
+                                                <td>{crane.personResponsibleToFixedState.employeeFirstName}</td>
+                                                {/* <img src={crane.personResponsibleToFixedState.personImage} style={{width: 100, height: 100}} /> */}
+                                                <Image src={crane.personResponsibleToFixedState.personImage} roundedCircle style={{ width: 100, height: 100 }} />
                                                 <td className="btn-cranes"><Link className="btn btn-md btn-primary" to={`/${crane.id}/detail`}>Подробнее</Link></td>
                                             </tr>
-                                        )) 
+                                        ))
                                         }
                                     </tbody>
                                 </table>
                             </div>
-                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,7 +64,7 @@ export class Cranes extends Component {
         return (
             <>
                 {this.renderComponent()}
-            </> 
+            </>
         )
     }
 }

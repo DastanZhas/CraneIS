@@ -6,7 +6,6 @@ from cranes.models import (
     PersonResponsibleToFixedState, 
     PersonResponsibleForSupervision )
 
-from rest_framework import viewsets, permissions
 from .serializers import ( 
     CranesSerializer,
     ExaminationPeriodTechPassportSerializer, 
@@ -20,12 +19,17 @@ from .models import ( ExaminationPeriodTechPassport,
 Cranes, FirstTechnicalMaintenance, 
 SecondTechnicalMaintenance, 
 Inspection, 
-PersonResponsibleToFixedState, 
+PersonResponsibleToFixedState,
 PersonResponsibleForSupervision )
 
 from .models import CraneQuerySet, CranesManager
-from .serializers import ExaminationListRetrieveSerializer
+from .serializers import ForeignKeyRetrieveSerializer
 from django.http import HttpResponse
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import viewsets, permissions
+from rest_framework.decorators import api_view
+import json
 
 # Cranes Viewset
 class CranesViewSet(viewsets.ModelViewSet):
@@ -38,15 +42,27 @@ class CranesViewSet(viewsets.ModelViewSet):
     serializer_class = CranesSerializer
 
     action_to_serializer = {
-        "list": ExaminationListRetrieveSerializer,
-        "retrieve": ExaminationListRetrieveSerializer
+        "list": ForeignKeyRetrieveSerializer,
+        "retrieve": ForeignKeyRetrieveSerializer
     }
 
     def get_serializer_class(self):
         return self.action_to_serializer.get(
             self.action,
             self.serializer_class
-        )
+        ) 
+
+# @api_view(['GET', 'POST'])
+# def cranes_view(request):
+#     if request.method == 'GET':
+#         return Response("Not Implemented")
+#     elif requets.method == 'POST':
+#         serializer = CranesSerializer(data=request.data)
+#         if serializer.is_valid():
+#             craneType = request.data[craneType]
+#             Cranes.objects.create(craneType=craneType)
+#             return Response("Crane created", status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ExaminationPeriodTechPassportViewSet(viewsets.ModelViewSet):
     permission_classes = [

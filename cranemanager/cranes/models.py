@@ -7,22 +7,16 @@ from django.db.models import signals
 
 # Технический паспорт и сроки освидетельствования
 class ExaminationPeriodTechPassport(models.Model):
-    technicalPassportdownloadUrl = models.FileField(
-        max_length=None, upload_to='uploads/', blank=False, null=False)  # Изменить required to True
+    technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='uploads/', blank=False, null=False)
     examinationPeriodDate = models.DateField(auto_now=False)
-    # cranes = models.OneToOneField(Cranes, on_delete=models.CASCADE)
-
+    
 # Техническое обслуживание 1 - ТО1
-
-
 class FirstTechnicalMaintenance(models.Model):
     to1 = models.TextField(max_length=250)
     periodOfFirstTMfrom = models.DateField(auto_now=False)
     periodOfFirstTMto = models.DateField(auto_now=False)
 
 # Техническое обслуживание 2 - ТО2
-
-
 class SecondTechnicalMaintenance(models.Model):
     to2 = models.TextField(max_length=250)
     periodOfSecondTMfrom = models.DateField(auto_now=False)
@@ -33,8 +27,6 @@ class SecondTechnicalMaintenance(models.Model):
     materialsStatement = models.TextField(max_length=250)
 
 # Обследование и сроки
-
-
 class Inspection(models.Model):
     periodInspectionfrom = models.DateField(auto_now=False)
     periodInspectionto = models.DateField(auto_now=False)
@@ -94,9 +86,9 @@ class Cranes(models.Model):
     # Завод изготовитель
     factoryManufacturer = models.CharField(max_length=100, unique=True)
     # Срок освидетельствования
-    # examinationPeriod = models.ForeignKey(ExaminationPeriodTechPassport, related_name="cranes", on_delete=models.CASCADE, null=True)
-    examinationPeriod = models.OneToOneField(
-        ExaminationPeriodTechPassport, on_delete=models.CASCADE, default=1)
+    examinationPeriod = models.ForeignKey(ExaminationPeriodTechPassport, related_name="cranes", on_delete=models.CASCADE, null=True)
+    # examinationPeriod = models.OneToOneField(
+    #     ExaminationPeriodTechPassport, related_name="cranes", on_delete=models.CASCADE)
     # Режим работы
     workMode = models.CharField(max_length=50)
     # Место установки
@@ -125,13 +117,3 @@ class Cranes(models.Model):
     # user?
     owner = models.ForeignKey(
         User, related_name="cranes", on_delete=models.CASCADE, null=True)
-
-
-def create_model_examination(sender, instance, created, **kwargs):
-    """Create Examination for every new Cranes."""
-    if created:
-        ExaminationPeriodTechPassport.objects.create(thing=instance)
-
-
-signals.post_save.connect(create_model_examination, sender=Cranes, weak=False,
-                          dispatch_uid='models.create_model_examination')

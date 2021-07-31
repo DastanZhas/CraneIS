@@ -39,10 +39,6 @@ const AddExamination = forwardRef((props, ref) => {
     }
 
     useImperativeHandle(ref, () => ({
-
-        getAlert() {
-            alert("getAlert from Child");
-        },
         async addExaminationClick() {
             store.dispatch(AddPersonResponsibleToFixedState());
         }

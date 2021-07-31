@@ -5,31 +5,53 @@ import { Link } from 'react-router-dom';
 import { tokenConfig } from '../../actions/auth';
 import store from '../../store';
 import { useDispatch } from "react-redux";
-import { DELETE_CRANE, DELETE_EXAMINATION } from '../../actions/types';
+import { DELETE_CRANE, DELETE_EXAMINATION, GET_CRANES, GET_EXAMINATION, GET_INSPECTION, GET_PERSON_FIXED_STATE, GET_PERSON_SUPERVISION, GET_TO1, GET_TO2 } from '../../actions/types';
 import { returnErrors, createMessage } from "../../actions/messages";
+import PropTypes, { element } from 'prop-types';
+import cranes from '../../reducers/cranes';
 
 
 const CraneDetail = () => {
-    const [crane, setCrane] = useState("");
-    const [examination, setExamination] = useState("");
+    const [crane, setCrane] = useState([]);
+    const [examination, setExamination] = useState([]);
+    const [to1, setTo1] = useState([]);
+    const [to2, setTo2] = useState([]);
+    const [inspection, setInspection] = useState([]);
+    const [personResponsibleToFixedState, setPersonResponsibleToFixedState] = useState([]);
+    const [personResponsibleForSupervision, setPersonResponsibleForSupervision] = useState([]);
 
     const { id } = useParams();
 
     const dispatch = useDispatch();
 
     const getSingleCrane = () => async (dispatch, getState) => {
-        const { data } = await axios
+        await axios
             .get(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState))
-        setCrane(data);
+            .then((response) => {
+                dispatch({type: GET_CRANES});
+                dispatch({type: GET_EXAMINATION});
+                dispatch({type: GET_TO1});
+                dispatch({type: GET_TO2});
+                dispatch({type: GET_INSPECTION});
+                dispatch({type: GET_PERSON_FIXED_STATE});
+                dispatch({type: GET_PERSON_SUPERVISION});
+                const singleCrane = response.data;
+                const singleExamination = response.data.examinationPeriod;
+                const to1data = response.data.technicalMaintenanceFirst;
+                const to2data = response.data.technicalMaintenanceSecond;
+                const inspectionData = response.data.inspection;
+                const personResponsibleFixedStateData = response.data.personResponsibleToFixedState;
+                const personResponsibleForSupervisionData = response.data.personResponsibleForSupervision;
+                setCrane(singleCrane);
+                setExamination(singleExamination);
+                setTo1(to1data);
+                setTo2(to2data);
+                setInspection(inspectionData);
+                setPersonResponsibleToFixedState(personResponsibleFixedStateData);
+                setPersonResponsibleForSupervision(personResponsibleForSupervisionData);
+                console.log(singleCrane);
+            })
     }
-
-    // useParams crane id and examination id is not the same
-    const getSingleExamination = () => async (dispatch, getState) => {
-        const { data } = await axios
-            .get(`http://127.0.0.1:8000/api/examination/${id}/`, tokenConfig(getState))
-        setExamination(data);
-    }
-
 
     const deleteSingleCrane = () => async (dispatch, getState) => {
         await axios
@@ -53,9 +75,8 @@ const CraneDetail = () => {
 
     useEffect(() => {
         store.dispatch(getSingleCrane());
-        store.dispatch(getSingleExamination());
     }, [])
-    
+
     const handleDeleteClick = () => {
         store.dispatch(deleteSingleCrane());
         store.dispatch(deleteSingleExamination());
@@ -73,18 +94,18 @@ const CraneDetail = () => {
                 <p>Завод изготовитель: {crane.factoryManufacturer}</p>
                 <div>
                     <strong>Сроки освидетельствования и технический паспорт</strong>
-                    <p>ID: {crane.examinationPeriod}</p>
-                    <p>Срок освидетельствования: {examination.examinationPeriodDate}</p>
+                    <p>{examination.id}</p>
+                    <p>{examination.examinationPeriodDate}</p>
                     <p>{examination.technicalPassportdownloadUrl}</p>
+                    <p>{to1.id}</p>
+                    <p>{to2.id}</p>
+                    <p>{inspection.id}</p>
+                    <p>{personResponsibleToFixedState.id}</p>
+                    <p>{personResponsibleForSupervision.id}</p>
                     <strong>-----</strong>
                 </div>
                 <p>{crane.workMode}</p>
                 <p>{crane.installationPlace}</p>
-                <p>{crane.technicalMaintenanceFirst}</p>
-                <p>{crane.technicalMaintenanceSecond}</p>
-                <p>{crane.inspection}</p>
-                <p>{crane.personResponsibleToFixedState}</p>
-                <p>{crane.personResponsibleForSupervision}</p>
                 <p>{crane.metalInspection}</p>
                 <p>{crane.mechanicalControl}</p>
                 <p>{crane.electricalParts}</p>

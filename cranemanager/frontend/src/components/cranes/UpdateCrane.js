@@ -18,15 +18,15 @@ const UpdateCrane = () => {
     const [examinationPeriod, setExaminationPeriod] = useState()
     const [workMode, setWorkMode] = useState("")
     const [installationPlace, setInstallationPlace] = useState("")
-    const [technicalMaintenanceFirst, setTechnicalMaintenanceFirst] = useState(null)
-    const [technicalMaintenanceSecond, setTechnicalMaintenanceSecond] = useState(null)
-    const [inspection, setInspection] = useState(null)
-    const [personResponsibleToFixedState, setPersonResponsibleToFixedState] = useState(null)
-    const [personResponsibleForSupervision, setPersonResponsibleForSupervision] = useState(null)
+    const [technicalMaintenanceFirst, setTechnicalMaintenanceFirst] = useState("")
+    const [technicalMaintenanceSecond, setTechnicalMaintenanceSecond] = useState("")
+    const [inspection, setInspection] = useState("")
+    const [personResponsibleToFixedState, setPersonResponsibleToFixedState] = useState("")
+    const [personResponsibleForSupervision, setPersonResponsibleForSupervision] = useState("")
     const [metalInspection, setMetalInspection] = useState("")
     const [mechanicalControl, setMechanicalControl] = useState("")
     const [electricalParts, setElectricalParts] = useState("")
-    const [owner, setOwner] = useState(null)
+    const [owner, setOwner] = useState("")
 
     const history = useHistory();
 
@@ -34,9 +34,10 @@ const UpdateCrane = () => {
 
     const dispatch = useDispatch();
 
+
     const loadCranes = () => async (dispatch, getState) => {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState));
-        console.log(data)
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState))
+
 
         setCraneType(data.craneType)
         setLoadCapacity(data.loadCapacity)
@@ -44,14 +45,14 @@ const UpdateCrane = () => {
         setFactoryNumber(data.factoryNumber)
         setInventorizationNumber(data.inventorizationNumber)
         setFactoryManufacturer(data.factoryManufacturer)
-        setExaminationPeriod(data.examinationPeriod)
+        setExaminationPeriod(data.examinationPeriod.id)
         setWorkMode(data.workMode)
         setInstallationPlace(data.installationPlace)
-        setTechnicalMaintenanceFirst(data.technicalMaintenanceFirst)
-        setTechnicalMaintenanceSecond(data.technicalMaintenanceSecond)
-        setInspection(data.inspection)
-        setPersonResponsibleToFixedState(data.personResponsibleToFixedState)
-        setPersonResponsibleForSupervision(data.personResponsibleForSupervision)
+        setTechnicalMaintenanceFirst(data.technicalMaintenanceFirst.id)
+        setTechnicalMaintenanceSecond(data.technicalMaintenanceSecond.id)
+        setInspection(data.inspection.id)
+        setPersonResponsibleToFixedState(data.personResponsibleToFixedState.id)
+        setPersonResponsibleForSupervision(data.personResponsibleForSupervision.id)
         setMetalInspection(data.metalInspection)
         setMechanicalControl(data.mechanicalControl)
         setElectricalParts(data.electricalParts)
@@ -64,7 +65,7 @@ const UpdateCrane = () => {
 
     const UpdateCraneInfo = () => async (dispatch, getState) => {
         let formField = new FormData();
-        
+
         formField.append('craneType', craneType)
         formField.append('loadCapacity', loadCapacity)
         formField.append('registerNumber', registerNumber)
@@ -104,7 +105,7 @@ const UpdateCrane = () => {
             <br />
             <h1>Редактирование крана</h1>
             <Form>
-            <FormGroup>
+                <FormGroup>
                     <Label for="craneType">Тип крана</Label>
                     <Input
                         type="text"
@@ -175,15 +176,7 @@ const UpdateCrane = () => {
                     />
                 </FormGroup>
 
-                {/* <FormGroup defaultValue="Choose...">
-                    <Label>Режим работы</Label>
-                    <Input as="select" defaultValue="Choose...">
-                        {this.props.examination.map(examination => (
-                            <option key={examination.id} value={this.examinationPeriod} onChange={(e) => setExaminationPeriod(e.target.value)}>{examination.id}</option>
-                        ))}
-                    </Input>
-                </FormGroup> */}
-                <FormGroup>
+                {/* <FormGroup>
                     <Label>Сроки освидетельствования и паспорт</Label>
                     <Input
                         type="number"
@@ -193,7 +186,7 @@ const UpdateCrane = () => {
                         value={examinationPeriod}
                         onChange={(e) => setExaminationPeriod(e.target.value)}
                     />
-                </FormGroup>
+                </FormGroup> */}
 
                 <FormGroup>
                     <Label>Режим работы</Label>
