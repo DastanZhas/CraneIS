@@ -13,7 +13,8 @@ from .serializers import (
     SecondTechnicalMaintenanceSerializer, 
     InspectionSerializer, 
     PersonResponsibleToFixedStateSerializer, 
-    PersonResponsibleForSupervisionSerializer )
+    PersonResponsibleForSupervisionSerializer,
+    CranesUpdateSerializer )
 
 from .models import ( ExaminationPeriodTechPassport, 
 Cranes, FirstTechnicalMaintenance, 
@@ -50,7 +51,15 @@ class CranesViewSet(viewsets.ModelViewSet):
         return self.action_to_serializer.get(
             self.action,
             self.serializer_class
-        ) 
+        )
+
+
+class CranesUpdateViewSet(viewsets.ModelViewSet):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    queryset = Cranes.objects.all()
+    serializer_class = CranesUpdateSerializer
 
 # @api_view(['GET', 'POST'])
 # def cranes_view(request):

@@ -31,12 +31,18 @@ class PersonResponsibleToFixedStateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonResponsibleToFixedState
         fields = '__all__'
+        extra_kwargs = {
+            'orderNumber': {'validators': []},
+        }
 
 # Лицо ответственное по надзору
 class PersonResponsibleForSupervisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonResponsibleForSupervision
         fields = '__all__'
+        extra_kwargs = {
+            'orderNumber': {'validators': []},
+        }
 
 # Cranes Serializer
 class CranesSerializer(serializers.ModelSerializer):
@@ -86,6 +92,58 @@ class CranesSerializer(serializers.ModelSerializer):
             validated_data['personResponsibleForSupervision'] = personResponsibleForSupervision
         return Cranes.objects.create(**validated_data)
 
+class CranesUpdateSerializer(serializers.ModelSerializer):
+    examinationPeriod = ExaminationPeriodTechPassportSerializer()
+    technicalMaintenanceFirst = FirstTechnicalMaintenanceSerializer()
+    technicalMaintenanceSecond = SecondTechnicalMaintenanceSerializer()
+    inspection = InspectionSerializer()
+    personResponsibleToFixedState = PersonResponsibleToFixedStateSerializer()
+    personResponsibleForSupervision = PersonResponsibleForSupervisionSerializer()
+
+    class Meta:
+        model = Cranes
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        nested_serializer = self.fields['examinationPeriod']
+        nested_instance = instance.examinationPeriod
+        #pop'ed data
+        nested_data = validated_data.pop('examinationPeriod')
+        # two parameters: nested_instance and nested_data and update examinationPeriod
+        nested_serializer.update(nested_instance, nested_data)
+
+        nested_to1_serializer = self.fields['technicalMaintenanceFirst']
+        nested_to1_instance = instance.technicalMaintenanceFirst
+        nested_to1_data = validated_data.pop('technicalMaintenanceFirst')
+        ## update to1
+        nested_to1_serializer.update(nested_to1_instance, nested_to1_data)
+        
+        nested_to2_serializer = self.fields['technicalMaintenanceSecond']
+        nested_to2_instance = instance.technicalMaintenanceSecond
+        nested_to2_data = validated_data.pop('technicalMaintenanceSecond')
+        ## update to2
+        nested_to2_serializer.update(nested_to2_instance, nested_to2_data)
+
+        nested_inspection_serializer = self.fields['inspection']
+        nested_inspection_instance = instance.inspection
+        nested_inspection_data = validated_data.pop('inspection')
+        ## update inspection
+        nested_inspection_serializer.update(nested_inspection_instance, nested_inspection_data)
+
+        # personResponsibleToFixedState
+        nested_personFix_serializer = self.fields['personResponsibleToFixedState']
+        nested_personFix_instance = instance.personResponsibleToFixedState
+        nested_personFix_data = validated_data.pop('personResponsibleToFixedState')
+        ## update personResponsibleToFixedState
+        nested_personFix_serializer.update(nested_personFix_instance, nested_personFix_data)
+
+        # personResponsibleForSupervision
+        nested_personVision_serializer = self.fields['personResponsibleForSupervision']
+        nested_personVision_instance = instance.personResponsibleForSupervision
+        nested_personVision_data = validated_data.pop('personResponsibleForSupervision')
+        ## update personResponsibleForSupervision
+        nested_personVision_serializer.update(nested_personVision_instance, nested_personVision_data)
+        return super(CranesUpdateSerializer, self).update(instance, validated_data)
 
 # Serializer for retrieve data from examination table to cranes table
 # Сериалайзер для представления данных из таблицы examination на таблицу cranes

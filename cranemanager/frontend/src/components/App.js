@@ -47,7 +47,7 @@ class App extends React.Component {
                             <Main />
                             <Alerts />
                             <Switch>
-                                {/* <PrivateRoute exact path="/" component={Main}/> */}
+                                <PrivateRoute exact path="/" component={Main}/>
                                 <PrivateRoute path="/add-crane" component={AddCrane}/>
                                 <PrivateRoute path="/cranes" component={Cranes}/>
                                 <PrivateRoute path="/:id/detail" component={CraneDetail}/>

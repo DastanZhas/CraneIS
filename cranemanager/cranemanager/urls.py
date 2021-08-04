@@ -11,6 +11,6 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('api/cranes/', include('cranes.urls')),
     path('admin/', admin.site.urls),
-    re_path(r'^api/cranes/$', views.cranes_list),
-    re_path(r'^api/cranes/([0-9])$', views.cranes_detail),
+    # re_path(r'^api/cranes/$', views.cranes_list),
+    # re_path(r'^api/cranes/([0-9])$', views.cranes_detail),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

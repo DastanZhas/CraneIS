@@ -7,7 +7,7 @@ from django.db.models import signals
 
 # Технический паспорт и сроки освидетельствования
 class ExaminationPeriodTechPassport(models.Model):
-    technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='uploads/', blank=False, null=False)
+    technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='uploads/', blank=True, null=True)
     examinationPeriodDate = models.DateField(auto_now=False)
     
 # Техническое обслуживание 1 - ТО1
@@ -37,7 +37,7 @@ class Inspection(models.Model):
 
 class PersonResponsibleToFixedState(models.Model):
     personImage = models.ImageField(
-        max_length=None, upload_to='uploads/images', null=False, blank=False)
+        max_length=None, upload_to='uploads/images', null=True, blank=True)
     employeePost = models.CharField(max_length=100)
     orderNumber = models.IntegerField(unique=True)
     employeeFirstName = models.CharField(max_length=100)
@@ -50,7 +50,7 @@ class PersonResponsibleToFixedState(models.Model):
 
 class PersonResponsibleForSupervision(models.Model):
     personImage = models.ImageField(
-        max_length=None, upload_to='uploads/images', null=False, blank=False)  # Изменить required to True
+        max_length=None, upload_to='uploads/images', null=True, blank=True)  # Изменить required to True
     employeePost = models.CharField(max_length=100)
     orderNumber = models.IntegerField(unique=True)
     employeeFirstName = models.CharField(max_length=100)
@@ -87,8 +87,6 @@ class Cranes(models.Model):
     factoryManufacturer = models.CharField(max_length=100, unique=True)
     # Срок освидетельствования
     examinationPeriod = models.ForeignKey(ExaminationPeriodTechPassport, related_name="cranes", on_delete=models.CASCADE, null=True)
-    # examinationPeriod = models.OneToOneField(
-    #     ExaminationPeriodTechPassport, related_name="cranes", on_delete=models.CASCADE)
     # Режим работы
     workMode = models.CharField(max_length=50)
     # Место установки
