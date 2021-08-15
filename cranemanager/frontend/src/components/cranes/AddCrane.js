@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-import Image from 'react-bootstrap/Image'
-import { FormGroup, Form, Label, Input, FormText, Collapse, Button, CardBody, Card } from 'reactstrap';
+import { FormGroup, Form, Label, Input, Button } from 'reactstrap';
 
 import axios from "axios";
-import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { createMessage, returnErrors } from "../../actions/messages";
 import { tokenConfig } from '../../actions/auth';
 import store from '../../store';
-import Alerts from '../layout/Alerts';
 import { ADD_CRANE } from '../../actions/types';
+import { Cranes } from './Cranes';
+import { Link, Redirect } from 'react-router-dom';
 
-import AddExamination from '../examinationTechpassport/AddExamination';
 
 // const { forwardRef, useRef, useImperativeHandle } = React;
 
@@ -23,7 +21,6 @@ const AddCrane = () => {
     const [factoryNumber, setFactoryNumber] = useState("")
     const [inventorizationNumber, setInventorizationNumber] = useState("")
     const [factoryManufacturer, setFactoryManufacturer] = useState("")
-    const [examinationPeriod, setExaminationPeriod] = useState({})
     //nested object/table examination period and tech pasport fields
     const [technicalPassportdownloadUrl, setTechnicalPassportdownloadUrl] = useState();
     const [examinationPeriodDate, setExaminationPeriodDate] = useState("");
@@ -31,13 +28,11 @@ const AddCrane = () => {
     const [workMode, setWorkMode] = useState("")
     const [installationPlace, setInstallationPlace] = useState("")
     // nested object/table TO1
-    const [technicalMaintenanceFirst, setTechnicalMaintenanceFirst] = useState("")
     const [to1, setTo1] = useState("")
     const [periodOfFirstTMfrom, setPeriodOfFirstTMfrom] = useState("")
     const [periodOfFirstTMto, setPeriodOfFirstTMto] = useState("")
     //----------------------------------------------------
     // nested object/table TO2
-    const [technicalMaintenanceSecond, setTechnicalMaintenanceSecond] = useState("")
     const [to2, setTo2] = useState("")
     const [periodOfSecondTMfrom, setPeriodOfSecondTMfrom] = useState("")
     const [periodOfSecondTMto, setPeriodOfSecondTMto] = useState("")
@@ -45,13 +40,11 @@ const AddCrane = () => {
     const [materialsStatement, setMaterialsStatement] = useState("")
     // ---------------------------------
     // nested object/table Inspection // Обследования и сроки
-    const [inspection, setInspection] = useState("")
     const [periodInspectionfrom, setPeriodInspectionfrom] = useState("")
     const [periodInspectionto, setPeriodInspectionto] = useState("")
     const [inspectionText, setInspectionText] = useState("")
     //--------------------------------------------------------
     // nested object/table Person Responsible to fixed state/Лицо ответственное за исправленное состояние
-    const [personResponsibleToFixedState, setPersonResponsibleToFixedState] = useState("")
     const [personImage, setPersonImage] = useState()
     const [employeePost, setEmployeePost] = useState("")
     const [orderNumber, setOrderNumber] = useState("")
@@ -60,7 +53,6 @@ const AddCrane = () => {
     const [employeePatronymic, setEmployeePatronymic] = useState("")
     // ---------------------------------------------------------------------------
     // nested object/table Person Responsible for supervision/Лицо ответственное по надзору
-    const [personResponsibleForSupervision, setPersonResponsibleForSupervision] = useState("")
     const [personImageVision, setPersonImageVision] = useState()
     const [employeePostVision, setEmployeePostVision] = useState("")
     const [orderNumberVision, setOrderNumberVision] = useState("")
@@ -72,33 +64,6 @@ const AddCrane = () => {
     const [mechanicalControl, setMechanicalControl] = useState("")
     const [electricalParts, setElectricalParts] = useState("")
     const [owner, setOwner] = useState("")
-
-    const history = useHistory();
-
-    const dispatch = useDispatch();
-
-    // const childRef = useRef();
-
-    //for GET method
-    const [crane, setCrane] = useState("");
-    const [getExamination, setGetExamination] = useState("");
-
-    const getSingleCrane = () => async (dispatch, getState) => {
-        const { data } = await axios
-            .get(`http://127.0.0.1:8000/api/cranes/`, tokenConfig(getState))
-        setCrane(data);
-        console.log(data);
-    }
-
-    const getSingleExamination = () => async (dispatch, getState) => {
-        const { data } = await axios
-            .get(`http://127.0.0.1:8000/api/examination/`, tokenConfig(getState))
-        setGetExamination(data);
-    }
-
-    //collapse examination
-    const [isOpen, setIsOpen] = useState(false);
-    const toggle = () => setIsOpen(!isOpen);
 
     const AddCraneInfo = () => async (dispatch, getState) => {
         let formField = new FormData()
@@ -155,32 +120,30 @@ const AddCrane = () => {
         formField.append('electricalParts', electricalParts)
         formField.append('owner', owner)
 
-        // for (var pair of formField.entries()) {
-        //     console.log(pair[0]+ ', ' + pair[1]); 
-        // }
-
         await axios
             .post(`/api/cranes/`, formField, tokenConfig(getState))
             .then((response) => {
                 dispatch(createMessage({ craneAdded: "Crane added!" }));
-                dispatch({ type: ADD_CRANE })
-                history.push('/')
+                dispatch({ type: ADD_CRANE });
+                window.location.reload();
+            }).catch(error => {
+                console.log(error.response.data);
+                return false;
             })
     }
 
     useEffect(() => {
-        store.dispatch(getSingleCrane());
-        store.dispatch(getSingleExamination());
+        //
     }, [])
 
-    async function handleClick() {
-        // childRef.current.addExaminationClick()
+
+    function handleClick(e) {
+        e.preventDefault();
         store.dispatch(AddCraneInfo());
     }
 
     return (
         <div>
-            <h1>Добавление крана</h1>
             <h1>Добавление крана</h1>
 
             <Form>
@@ -255,10 +218,9 @@ const AddCrane = () => {
                     />
                 </FormGroup>
 
-                <br />
-                <Button color="primary" onClick={toggle}>Добавить сроки освидетельствования и тех паспорт</Button>
-                <Collapse isOpen={isOpen}>
-                    {/* <AddExamination ref={childRef} /> */}
+                <div>
+                    <h2>Срок освидетельствования и технический паспорт</h2>
+                    
                     <FormGroup>
                         <Label>Паспорт крана</Label>
                         <Input
@@ -279,18 +241,7 @@ const AddCrane = () => {
                             onChange={(e) => setExaminationPeriodDate(e.target.value)}
                         />
                     </FormGroup>
-
-                    {/* <FormGroup>
-                        <Label for="exampleDate">Сроки освидетельствования</Label>
-                        <Input
-                            type="text"
-                            name="examinationPeriod"
-                            // value={examinationPeriod}
-                            placeholder="сроки освидетельствования"
-                            // onChange={(e) => setExaminationPeriod(e.target.value)}
-                        />
-                    </FormGroup> */}
-                </Collapse>
+                </div>
 
                 <FormGroup>
                     <Label>Режим работы</Label>
@@ -317,18 +268,7 @@ const AddCrane = () => {
                 </FormGroup>
 
                 <div>
-                    {/* <FormGroup>
-                        <Label>ТО1</Label>
-                        <Input
-                            type="number"
-                            rows={4}
-                            placeholder="ТО1"
-                            name="technicalMaintenanceFirst"
-                            value={technicalMaintenanceFirst}
-                            onChange={(e) => setTechnicalMaintenanceFirst(e.target.value)}
-                        />
-                    </FormGroup> */}
-                    <h2>TO 1 table fields input</h2>
+                    <h2>Техническое обслуживание 1</h2>
                     <FormGroup>
                         <Label>ТО1 text</Label>
                         <Input
@@ -365,18 +305,7 @@ const AddCrane = () => {
                 </div>
 
                 <div>
-                    {/* <FormGroup>
-                        <Label>ТО2</Label>
-                        <Input
-                            min={0} max={100} type="number"
-                            rows={4}
-                            placeholder="ТО2"
-                            name="technicalMaintenanceSecond"
-                            value={technicalMaintenanceSecond}
-                            onChange={(e) => setTechnicalMaintenanceSecond(e.target.value)}
-                        />
-                    </FormGroup> */}
-                    <h2>TO 2 fields input</h2>
+                    <h2>Техническое обслуживание 2</h2>
                     <FormGroup>
                         <Label>ТО2</Label>
                         <Input
@@ -439,6 +368,7 @@ const AddCrane = () => {
 
                 <div>
                     <h2>Обследование и сроки обследования</h2>
+
                     <FormGroup>
                         <Label for="Inspection">Сроки обследования от</Label>
                         <Input
@@ -477,17 +407,7 @@ const AddCrane = () => {
 
                 <div>
                     <h2>Лицо ответственное за исправленное состояние</h2>
-                    {/* <FormGroup>
-                        <Label>Лицо ответственное за исправленное состояние</Label>
-                        <Input
-                            type="text"
-                            rows={4}
-                            placeholder="Выберите или добавьте ответственное лицо"
-                            name="personResponsibleToFixedState"
-                            value={personResponsibleToFixedState}
-                            onChange={(e) => setPersonResponsibleToFixedState(e.target.value)}
-                        />
-                    </FormGroup> */}
+
                     <FormGroup>
                         <Label>Изображение работника</Label>
                         <Input
@@ -558,17 +478,6 @@ const AddCrane = () => {
                     </FormGroup>
                 </div>
                 <div>
-                    {/* <FormGroup>
-                        <Label>Лицо ответственное по надзору</Label>
-                        <Input
-                            type="text"
-                            rows={4}
-                            placeholder="Выберите или добавьте ответственное лицо"
-                            name="personResponsibleForSupervision"
-                            value={personResponsibleForSupervision}
-                            onChange={(e) => setPersonResponsibleForSupervision(e.target.value)}
-                        />
-                    </FormGroup> */}
                     <h2>Лицо ответственное по надзору</h2>
                     <FormGroup>
                         <Label>Изображение работникаVision</Label>
@@ -638,7 +547,6 @@ const AddCrane = () => {
                             onChange={(e) => setEmployeePatronymicVision(e.target.value)}
                         />
                     </FormGroup>
-                    <p>-------------------------------------------------------------------</p>
                 </div>
 
                 <FormGroup>
@@ -689,7 +597,7 @@ const AddCrane = () => {
                     />
                 </FormGroup>
             </Form>
-            <Button variant="success" onClick={handleClick}>
+            <Button variant="success" type="button" onClick={(e) => {handleClick(e)}}>
                 Добавить кран
             </Button>
 

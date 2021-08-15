@@ -23,7 +23,7 @@ const Main = (props) => {
         <div className={toggle ? "body-pd" : null}>
             <header className={toggle ? "header body-pd" : "header"} id="header">
                 <div className={toggle ? "header_toggle bx-x" : "header_toggle"} onClick={onCl}>
-                    <i className={toggle ? "fas fa-times" : "fas fa-bars"} id="header-toggle"></i>
+                    <i className={toggle ? "fas fa-times" : "fas fa-bars"} id="header-toggle"> Промышленные краны</i>
                 </div>
             </header>
             <div className={toggle ? "l-navbar show" : "l-navbar"} id="nav-bar">

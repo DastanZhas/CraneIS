@@ -99,6 +99,7 @@ class CranesUpdateSerializer(serializers.ModelSerializer):
     inspection = InspectionSerializer()
     personResponsibleToFixedState = PersonResponsibleToFixedStateSerializer()
     personResponsibleForSupervision = PersonResponsibleForSupervisionSerializer()
+    owner = CranesSerializer(read_only=True)
 
     class Meta:
         model = Cranes

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { FormGroup, Form, Label, Input, FormText, Collapse, Button, CardBody, Card } from 'reactstrap';
+import { FormGroup, Form, Label, Input, Button } from 'reactstrap';
 import { useHistory, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { tokenConfig } from "../../actions/auth";
@@ -82,31 +82,25 @@ const UpdateCrane = () => {
         setFactoryNumber(data.factoryNumber)
         setInventorizationNumber(data.inventorizationNumber)
         setFactoryManufacturer(data.factoryManufacturer)
-        //
         // setExaminationPeriod(data.examinationPeriod.id)
         setTechnicalPassportdownloadUrl(data.examinationPeriod.technicalPassportdownloadUrl)
         setExaminationPeriodDate(data.examinationPeriod.examinationPeriodDate)
-        //
         setWorkMode(data.workMode)
         setInstallationPlace(data.installationPlace)
-        //
         // setTechnicalMaintenanceFirst(data.technicalMaintenanceFirst.id)
         setTo1(data.technicalMaintenanceFirst.to1)
         setPeriodOfFirstTMfrom(data.technicalMaintenanceFirst.periodOfFirstTMfrom)
         setPeriodOfFirstTMto(data.technicalMaintenanceFirst.periodOfFirstTMto)
-        //
         // setTechnicalMaintenanceSecond(data.technicalMaintenanceSecond.id)
         setTo2(data.technicalMaintenanceSecond.to2)
         setPeriodOfSecondTMfrom(data.technicalMaintenanceSecond.periodOfSecondTMfrom)
         setPeriodOfSecondTMto(data.technicalMaintenanceSecond.periodOfSecondTMto)
         setDefectsStatement(data.technicalMaintenanceSecond.defectsStatement)
         setMaterialsStatement(data.technicalMaintenanceSecond.materialsStatement)
-        //
         // setInspection(data.inspection.id)
         setPeriodInspectionfrom(data.inspection.periodInspectionfrom)
         setPeriodInspectionto(data.inspection.periodInspectionto)
         setInspectionText(data.inspection.inspection)
-        //
         // setPersonResponsibleToFixedState(data.personResponsibleToFixedState.id)
         setPersonImage(data.personResponsibleToFixedState.personImage)
         setEmployeePost(data.personResponsibleToFixedState.employeePost)
@@ -114,7 +108,6 @@ const UpdateCrane = () => {
         setEmployeeFirstName(data.personResponsibleToFixedState.employeeFirstName)
         setEmployeeSecondName(data.personResponsibleToFixedState.employeeSecondName)
         setEmployeePatronymic(data.personResponsibleToFixedState.employeePatronymic)
-        //
         // setPersonResponsibleForSupervision(data.personResponsibleForSupervision.id)
         setPersonImageVision(data.personResponsibleForSupervision.personImage)
         setEmployeePostVision(data.personResponsibleForSupervision.employeePost)
@@ -142,10 +135,9 @@ const UpdateCrane = () => {
         formField.append('factoryNumber', factoryNumber)
         formField.append('inventorizationNumber', inventorizationNumber)
         formField.append('factoryManufacturer', factoryManufacturer)
-        // formField.append('examinationPeriod', examinationPeriod)
         //nested object/table examination period and tech pasport fields
         // if user didn't selected the file, then set default value that already exists in db
-        if (personImage !== null) {
+        if (technicalPassportdownloadUrl !== null) {
             setTechnicalPassportdownloadUrl(technicalPassportdownloadUrl);
         }
         else {
@@ -156,24 +148,20 @@ const UpdateCrane = () => {
         formField.append('workMode', workMode)
         formField.append('installationPlace', installationPlace)
         //Техническое обслуживание 1
-        // formField.append('technicalMaintenanceFirst', technicalMaintenanceFirst)
         formField.append('technicalMaintenanceFirst.to1', to1)
         formField.append('technicalMaintenanceFirst.periodOfFirstTMfrom', periodOfFirstTMfrom)
         formField.append('technicalMaintenanceFirst.periodOfFirstTMto', periodOfFirstTMto)
         //Техническое обслуживание 2
-        // formField.append('technicalMaintenanceSecond', technicalMaintenanceSecond)
         formField.append('technicalMaintenanceSecond.to2', to2)
         formField.append('technicalMaintenanceSecond.periodOfSecondTMfrom', periodOfSecondTMfrom)
         formField.append('technicalMaintenanceSecond.periodOfSecondTMto', periodOfSecondTMto)
         formField.append('technicalMaintenanceSecond.defectsStatement', defectsStatement)
         formField.append('technicalMaintenanceSecond.materialsStatement', materialsStatement)
         // Сроки обследования
-        // formField.append('inspection', inspection)
         formField.append('inspection.periodInspectionfrom', periodInspectionfrom)
         formField.append('inspection.periodInspectionto', periodInspectionto)
         formField.append('inspection.inspection', inspectionText)
         // Лицо ответственное за исправленное состояние
-        // formField.append('personResponsibleToFixedState', personResponsibleToFixedState)
         // if user didn't selected the image, then set default value that already exists in db
         if (personImage !== null) {
             setPersonImage(personImage);
@@ -187,7 +175,6 @@ const UpdateCrane = () => {
         formField.append('personResponsibleToFixedState.employeeSecondName', employeeSecondName)
         formField.append('personResponsibleToFixedState.employeePatronymic', employeePatronymic)
         // Лицо ответственное по надзору
-        // formField.append('personResponsibleForSupervision', personResponsibleForSupervision)
         // if user didn't selected the image, then set default value that already exists in db
         if (personImageVision !== null) {
             setPersonImageVision(personImageVision)
@@ -297,7 +284,7 @@ const UpdateCrane = () => {
 
                 <FormGroup>
                     <Label>Паспорт крана</Label>
-                    <a href={technicalPassportdownloadUrl}>Паспорт крана скачать</a>
+                    <a href={technicalPassportdownloadUrl}>Текущий технический паспорт</a>
                     <Input
                         type="file"
                         name="technicalPassportdownloadUrl"

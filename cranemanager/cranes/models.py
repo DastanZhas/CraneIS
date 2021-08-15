@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.fields import related
 from rest_framework import serializers
 from datetime import datetime, datetime
 from django.db.models import signals
@@ -9,6 +10,11 @@ from django.db.models import signals
 class ExaminationPeriodTechPassport(models.Model):
     technicalPassportdownloadUrl = models.FileField(max_length=None, upload_to='uploads/', blank=True, null=True)
     examinationPeriodDate = models.DateField(auto_now=False)
+
+    # Когда удаляем файл с базы данных, он удаляется и с файловой системы
+    def delete(self, using=None, keep_parents=False):
+        self.technicalPassportdownloadUrl.storage.delete(self.technicalPassportdownloadUrl.name)
+        super().delete()
     
 # Техническое обслуживание 1 - ТО1
 class FirstTechnicalMaintenance(models.Model):
@@ -45,9 +51,12 @@ class PersonResponsibleToFixedState(models.Model):
     # Отчество
     employeePatronymic = models.CharField(max_length=100)
 
+    # Когда удаляем файл с базы данных, он удаляется и с файловой системы
+    def delete(self, using=None, keep_parents=False):
+        self.personImage.storage.delete(self.personImage.name)
+        super().delete()
+
 # Лицо ответственное по надзору
-
-
 class PersonResponsibleForSupervision(models.Model):
     personImage = models.ImageField(
         max_length=None, upload_to='uploads/images', null=True, blank=True)  # Изменить required to True
@@ -57,6 +66,11 @@ class PersonResponsibleForSupervision(models.Model):
     employeeSecondName = models.CharField(max_length=100)
     # Отчество
     employeePatronymic = models.CharField(max_length=100)
+
+    # Когда удаляем файл с базы данных, он удаляется и с файловой системы
+    def delete(self, using=None, keep_parents=False):
+        self.personImage.storage.delete(self.personImage.name)
+        super().delete()
 
 
 class CraneQuerySet(models.QuerySet):
@@ -115,3 +129,12 @@ class Cranes(models.Model):
     # user?
     owner = models.ForeignKey(
         User, related_name="cranes", on_delete=models.CASCADE, null=True)
+
+    def delete(self, using=None, keep_parents=False):
+        self.examinationPeriod.delete()
+        self.technicalMaintenanceFirst.delete()
+        self.technicalMaintenanceSecond.delete()
+        self.inspection.delete()
+        self.personResponsibleToFixedState.delete()
+        self.personResponsibleForSupervision.delete()
+        super().delete()

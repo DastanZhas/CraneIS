@@ -13,9 +13,6 @@ import AddCrane from './cranes/AddCrane';
 import CraneDetail from './cranes/CraneDetail';
 import UpdateCrane from './cranes/UpdateCrane';
 
-import ExaminationDetail from './examinationTechpassport/ExaminationDetail.js';
-import AddExamination from './examinationTechpassport/AddExamination';
-
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
 import PrivateRoute from "./common/PrivateRoute";
@@ -47,7 +44,7 @@ class App extends React.Component {
                             <Main />
                             <Alerts />
                             <Switch>
-                                <PrivateRoute exact path="/" component={Main}/>
+                                {/* <PrivateRoute exact path="/" component={Main}/> */}
                                 <PrivateRoute path="/add-crane" component={AddCrane}/>
                                 <PrivateRoute path="/cranes" component={Cranes}/>
                                 <PrivateRoute path="/:id/detail" component={CraneDetail}/>

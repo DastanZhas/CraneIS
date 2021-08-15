@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
+import { Image } from 'react-bootstrap';
+
 import { tokenConfig } from '../../actions/auth';
+
 import store from '../../store';
 import { useDispatch } from "react-redux";
-import { DELETE_CRANE, DELETE_EXAMINATION, GET_CRANES, GET_EXAMINATION, GET_INSPECTION, GET_PERSON_FIXED_STATE, GET_PERSON_SUPERVISION, GET_TO1, GET_TO2 } from '../../actions/types';
+import { useParams } from 'react-router';
+
+import {
+    DELETE_CRANE, GET_CRANES, GET_EXAMINATION, GET_INSPECTION,
+    GET_PERSON_FIXED_STATE, GET_PERSON_SUPERVISION, GET_TO1, GET_TO2
+} from '../../actions/types';
 import { returnErrors, createMessage } from "../../actions/messages";
-import PropTypes, { element } from 'prop-types';
 import cranes from '../../reducers/cranes';
 
 
@@ -28,13 +35,13 @@ const CraneDetail = () => {
         await axios
             .get(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState))
             .then((response) => {
-                dispatch({type: GET_CRANES});
-                dispatch({type: GET_EXAMINATION});
-                dispatch({type: GET_TO1});
-                dispatch({type: GET_TO2});
-                dispatch({type: GET_INSPECTION});
-                dispatch({type: GET_PERSON_FIXED_STATE});
-                dispatch({type: GET_PERSON_SUPERVISION});
+                dispatch({ type: GET_CRANES });
+                dispatch({ type: GET_EXAMINATION });
+                dispatch({ type: GET_TO1 });
+                dispatch({ type: GET_TO2 });
+                dispatch({ type: GET_INSPECTION });
+                dispatch({ type: GET_PERSON_FIXED_STATE });
+                dispatch({ type: GET_PERSON_SUPERVISION });
                 const singleCrane = response.data;
                 const singleExamination = response.data.examinationPeriod;
                 const to1data = response.data.technicalMaintenanceFirst;
@@ -49,7 +56,6 @@ const CraneDetail = () => {
                 setInspection(inspectionData);
                 setPersonResponsibleToFixedState(personResponsibleFixedStateData);
                 setPersonResponsibleForSupervision(personResponsibleForSupervisionData);
-                console.log(singleCrane);
             })
     }
 
@@ -59,17 +65,7 @@ const CraneDetail = () => {
             .then((response) => {
                 dispatch(createMessage({ craneDelete: "Crane was deleted" }));
                 dispatch({ type: DELETE_CRANE })
-                history.push('/')
-            }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
-    }
-
-    const deleteSingleExamination = () => async (dispatch, getState) => {
-        await axios
-            .delete(`http://127.0.0.1:8000/api/examination/${id}`, tokenConfig(getState))
-            .then((response) => {
-                dispatch(createMessage({ examinationDelete: "Examination was deleted successfully!" }))
-                dispatch({ type: DELETE_EXAMINATION })
-                history.push('/')
+                window.location.reload();
             }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
     }
 
@@ -79,44 +75,113 @@ const CraneDetail = () => {
 
     const handleDeleteClick = () => {
         store.dispatch(deleteSingleCrane());
-        store.dispatch(deleteSingleExamination());
     }
 
     return (
         <div>
             <h1>CraneDetail</h1>
-            <div>
-                <p>Тип крана: {crane.craneType}</p>
-                <p>Грузоподьемность: {crane.loadCapacity}</p>
-                <p>Регистрационный номер: {crane.registerNumber}</p>
-                <p>Заводской номер: {crane.factoryNumber}</p>
-                <p>Инвентаризационный: {crane.inventorizationNumber}</p>
-                <p>Завод изготовитель: {crane.factoryManufacturer}</p>
-                <div>
-                    <strong>Сроки освидетельствования и технический паспорт</strong>
-                    <p>{examination.id}</p>
-                    <p>{examination.examinationPeriodDate}</p>
-                    <p>{examination.technicalPassportdownloadUrl}</p>
-                    <p>{to1.id}</p>
-                    <p>{to2.id}</p>
-                    <p>{inspection.id}</p>
-                    <p>{personResponsibleToFixedState.id}</p>
-                    <p>{personResponsibleForSupervision.id}</p>
-                    <strong>-----</strong>
-                </div>
-                <p>{crane.workMode}</p>
-                <p>{crane.installationPlace}</p>
-                <p>{crane.metalInspection}</p>
-                <p>{crane.mechanicalControl}</p>
-                <p>{crane.electricalParts}</p>
-                <p>{crane.owner}</p>
+            <ListGroup>
+                <ListGroup>
+                    <ListGroupItem>Тип крана: {crane.craneType}</ListGroupItem>
+                    <ListGroupItem>Грузоподьемность: {crane.loadCapacity}</ListGroupItem>
+                    <ListGroupItem>Регистрационный номер: {crane.registerNumber}</ListGroupItem>
+                    <ListGroupItem>Заводской номер: {crane.factoryNumber}</ListGroupItem>
+                    <ListGroupItem>Инвентаризационный: {crane.inventorizationNumber}</ListGroupItem>
+                    <ListGroupItem>Завод изготовитель: {crane.factoryManufacturer}</ListGroupItem>
+                    <ListGroupItem>
+                        <ListGroupItemHeading>Срок освидетельствования</ListGroupItemHeading>
+                        <ListGroupItemText>
+                            Срок освидетельствования: {examination.examinationPeriodDate}
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            <a href={examination.technicalPassportdownloadUrl}>Скачать технический паспорт</a>
+                        </ListGroupItemText>
+                    </ListGroupItem>
 
+                    <ListGroupItem>Режим работы: {crane.workMode}</ListGroupItem>
+                    <ListGroupItem>Место установки: {crane.installationPlace}</ListGroupItem>
+
+                    <ListGroupItem>
+                        <ListGroupItemHeading>Техническое обслуживание 1</ListGroupItemHeading>
+                        <ListGroupItemText>
+                            Контент: {to1.to1}
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            <strong>Сроки прохождения технического обследования 1:</strong>
+                            <p>{to1.periodOfFirstTMfrom} - {to1.periodOfFirstTMto}</p>
+                        </ListGroupItemText>
+                    </ListGroupItem>
+                    <ListGroupItem>
+                        <ListGroupItemHeading>Техническое обслуживание 2</ListGroupItemHeading>
+                        <ListGroupItemText>
+                            Контент: {to2.to2}
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            <strong>Сроки прохождения технического обследования 2:</strong>
+                            <p>{to2.periodOfSecondTMfrom} - {to2.periodOfSecondTMto}</p>
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            Ведомость дефектов: {to2.defectsStatement}
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            Ведомость материалов: {to2.materialsStatement}
+                        </ListGroupItemText>
+                    </ListGroupItem>
+
+                    <ListGroupItem>
+                        <ListGroupItemHeading>Обследование и сроки</ListGroupItemHeading>
+                        <ListGroupItemText>
+                            <strong>Сроки обследования</strong>
+                            <p>{inspection.periodInspectionfrom} - {inspection.periodInspectionto}</p>
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            Контент: {inspection.inspection}
+                        </ListGroupItemText>
+                    </ListGroupItem>
+                </ListGroup>
+                <br />
+                <ListGroup>
+                    <ListGroupItem>
+                        <ListGroupItemHeading>Лицо ответственное за исправленное состояние</ListGroupItemHeading>
+                        <Image src={personResponsibleToFixedState.personImage} roundedCircle style={{ width: 100, height: 100 }} />
+                        <ListGroupItemText>
+                            <strong>{personResponsibleToFixedState.employeeFirstName} {personResponsibleToFixedState.employeeSecondName} {personResponsibleToFixedState.employeePatronymic}</strong>
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            <strong>Должность: {personResponsibleToFixedState.employeePost}</strong>
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            <strong>Номер приказа: {personResponsibleToFixedState.orderNumber}</strong>
+                        </ListGroupItemText>
+                    </ListGroupItem>
+                </ListGroup>
+                <br />
+                <ListGroup>
+                    <ListGroupItem>
+                        <ListGroupItemHeading>Лицо ответственное по надзору</ListGroupItemHeading>
+                        <Image src={personResponsibleForSupervision.personImage} roundedCircle style={{ width: 100, height: 100 }} />
+                        <ListGroupItemText>
+                            <strong>{personResponsibleForSupervision.employeeFirstName} {personResponsibleForSupervision.employeeSecondName} {personResponsibleForSupervision.employeePatronymic}</strong>
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            <strong>Должность: {personResponsibleForSupervision.employeePost}</strong>
+                        </ListGroupItemText>
+                        <ListGroupItemText>
+                            <strong>Номер приказа: {personResponsibleForSupervision.orderNumber}</strong>
+                        </ListGroupItemText>
+                    </ListGroupItem>
+                </ListGroup>
+                <br />
+                <ListGroupItem>Контроль по металлу : {crane.metalInspection}</ListGroupItem>
+                <ListGroupItem>Механический контроль: {crane.mechanicalControl}</ListGroupItem>
+                <ListGroupItem>Электронная часть: {crane.electricalParts}</ListGroupItem>
+                <br />
                 <Link className="btn btn-warning" to={`/${crane.id}/update`}>Редактировать</Link>
                 <br />
                 <Link className="btn btn-danger" to="/cranes" onClick={handleDeleteClick}>Удалить</Link>
                 <br />
                 <Link className="btn btn-primary" to="/cranes">Назад</Link>
-            </div>
+            </ListGroup>
         </div>
     );
 };

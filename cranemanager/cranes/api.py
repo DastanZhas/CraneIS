@@ -6,7 +6,7 @@ from cranes.models import (
     PersonResponsibleToFixedState, 
     PersonResponsibleForSupervision )
 
-from .serializers import ( 
+from .serializers import (
     CranesSerializer,
     ExaminationPeriodTechPassportSerializer, 
     FirstTechnicalMaintenanceSerializer, 
@@ -42,16 +42,16 @@ class CranesViewSet(viewsets.ModelViewSet):
     queryset = Cranes.objects.all()
     serializer_class = CranesSerializer
 
-    action_to_serializer = {
-        "list": ForeignKeyRetrieveSerializer,
-        "retrieve": ForeignKeyRetrieveSerializer
-    }
+    # action_to_serializer = {
+    #     "list": ForeignKeyRetrieveSerializer,
+    #     "retrieve": ForeignKeyRetrieveSerializer
+    # }
 
-    def get_serializer_class(self):
-        return self.action_to_serializer.get(
-            self.action,
-            self.serializer_class
-        )
+    # def get_serializer_class(self):
+    #     return self.action_to_serializer.get(
+    #         self.action,
+    #         self.serializer_class
+    #     )
 
 
 class CranesUpdateViewSet(viewsets.ModelViewSet):
@@ -60,18 +60,6 @@ class CranesUpdateViewSet(viewsets.ModelViewSet):
     ]
     queryset = Cranes.objects.all()
     serializer_class = CranesUpdateSerializer
-
-# @api_view(['GET', 'POST'])
-# def cranes_view(request):
-#     if request.method == 'GET':
-#         return Response("Not Implemented")
-#     elif requets.method == 'POST':
-#         serializer = CranesSerializer(data=request.data)
-#         if serializer.is_valid():
-#             craneType = request.data[craneType]
-#             Cranes.objects.create(craneType=craneType)
-#             return Response("Crane created", status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ExaminationPeriodTechPassportViewSet(viewsets.ModelViewSet):
     permission_classes = [
