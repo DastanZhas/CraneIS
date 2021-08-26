@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 import { FormGroup, Form, Label, Input, Button } from 'reactstrap';
 import { useHistory, useParams } from "react-router";
 import { useDispatch } from "react-redux";
+import { createMessage, returnErrors } from "../../actions/messages";
+import { UPDATE_CRANE } from '../../actions/types';
 import { tokenConfig } from "../../actions/auth";
+import { addCranes } from "../../actions/cranes";
 import store from "../../store";
 
 
@@ -196,8 +199,12 @@ const UpdateCrane = () => {
 
         await axios
             .put(`/api/cranes_update/${id}/`, formField, tokenConfig(getState))
-            .then(response => {
-                console.log(response.data)
+            .then(res => {
+                dispatch(createMessage({ updateCrane: "Crane Updated!" }));
+                dispatch({
+                    type: UPDATE_CRANE,
+                    payload: res.data
+                });
                 history.push('/')
             })
     }

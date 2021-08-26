@@ -89,6 +89,9 @@ export class Alerts extends Component {
             if(message.addCrane) {
                 alert.success(message.addCrane);
             }
+            if(message.updateCrane) {
+                alert.success(message.updateCrane);
+            }
             if(message.passwordsNotMatch) {
                 alert.error(message.passwordsNotMatch);
             }

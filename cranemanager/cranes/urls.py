@@ -1,6 +1,6 @@
 from django.db.models import base
 from rest_framework import routers
-from .api import CranesViewSet, ExaminationPeriodTechPassportViewSet, FirstTechnicalMaintenanceViewSet, SecondTechnicalMaintenanceViewSet, InspectionViewSet
+from .api import CranesViewSet, CranesSearchListView, ExaminationPeriodTechPassportViewSet, FirstTechnicalMaintenanceViewSet, SecondTechnicalMaintenanceViewSet, InspectionViewSet
 from .api import PersonResponsibleToFixedStateViewSet, PersonResponsibleForSupervisionViewSet, CranesUpdateViewSet
 from django.urls import path, include, re_path
 from . import views

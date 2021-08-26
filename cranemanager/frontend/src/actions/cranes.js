@@ -7,18 +7,7 @@ import cranes from "../reducers/cranes";
 
 //GET CRANES
 export const getCranes = () => (dispatch, getState) => {
-    axios.get("/api/cranes/", tokenConfig(getState))
-    .then(res => {
-        dispatch({
-            type: GET_CRANES,
-            payload: res.data
-        });
-    }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
-}
-
-//GET CRANES
-export const getCranesId = async () => (dispatch, getState) => {
-    axios.get("/api/cranes/1/", tokenConfig(getState))
+    axios.get("/api/cranes", tokenConfig(getState))
     .then(res => {
         dispatch({
             type: GET_CRANES,
@@ -60,8 +49,7 @@ export const updateCranes = (id, cranes) => dispatch => {
             type: UPDATE_CRANE,
             payload: res.data
         });
-    })
-    .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+    }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
 
 // export const findByinventorizationNumber = inventorizationNumber

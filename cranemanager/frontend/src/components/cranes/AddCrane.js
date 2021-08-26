@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { FormGroup, Form, Label, Input, Button } from 'reactstrap';
+import { useHistory, useParams } from "react-router";
 
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -65,6 +66,8 @@ const AddCrane = () => {
     const [electricalParts, setElectricalParts] = useState("")
     const [owner, setOwner] = useState("")
 
+    const history = useHistory();
+
     const AddCraneInfo = () => async (dispatch, getState) => {
         let formField = new FormData()
 
@@ -122,23 +125,22 @@ const AddCrane = () => {
 
         await axios
             .post(`/api/cranes/`, formField, tokenConfig(getState))
-            .then((response) => {
-                dispatch(createMessage({ craneAdded: "Crane added!" }));
-                dispatch({ type: ADD_CRANE });
-                window.location.reload();
+            .then((res) => {
+                dispatch(createMessage({ addCrane: "Crane Added" }));
+                dispatch({ 
+                    type: ADD_CRANE,
+                    payload: res.data 
+                });
+                history.push("/cranes")
             }).catch(error => {
-                console.log(error.response.data);
-                return false;
+                if(error) {
+                    console.log(error.response.data);
+                    return false;
+                }
             })
     }
 
-    useEffect(() => {
-        //
-    }, [])
-
-
-    function handleClick(e) {
-        e.preventDefault();
+    function handleClick() {
         store.dispatch(AddCraneInfo());
     }
 
@@ -597,7 +599,7 @@ const AddCrane = () => {
                     />
                 </FormGroup>
             </Form>
-            <Button variant="success" type="button" onClick={(e) => {handleClick(e)}}>
+            <Button variant="success" type="button" onClick={handleClick}>
                 Добавить кран
             </Button>
 

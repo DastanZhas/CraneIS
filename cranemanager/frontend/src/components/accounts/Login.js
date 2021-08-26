@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+
+import Cranes from '../cranes/Cranes';
+
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth'; 
@@ -24,7 +27,7 @@ export class Login extends Component {
 
     render() {
         if(this.props.isAuthenticated) {
-            return <Redirect to="/cranes" />;
+            return <Redirect to="/cranes"/>
         }
         const {username, password} = this.state;
         return (

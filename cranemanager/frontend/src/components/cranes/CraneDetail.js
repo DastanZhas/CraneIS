@@ -8,7 +8,7 @@ import { tokenConfig } from '../../actions/auth';
 
 import store from '../../store';
 import { useDispatch } from "react-redux";
-import { useParams } from 'react-router';
+import { useHistory, useParams } from "react-router";
 
 import {
     DELETE_CRANE, GET_CRANES, GET_EXAMINATION, GET_INSPECTION,
@@ -28,7 +28,7 @@ const CraneDetail = () => {
     const [personResponsibleForSupervision, setPersonResponsibleForSupervision] = useState([]);
 
     const { id } = useParams();
-
+    const history = useHistory();
     const dispatch = useDispatch();
 
     const getSingleCrane = () => async (dispatch, getState) => {
@@ -62,11 +62,17 @@ const CraneDetail = () => {
     const deleteSingleCrane = () => async (dispatch, getState) => {
         await axios
             .delete(`http://127.0.0.1:8000/api/cranes/${id}/`, tokenConfig(getState))
-            .then((response) => {
-                dispatch(createMessage({ craneDelete: "Crane was deleted" }));
-                dispatch({ type: DELETE_CRANE })
-                window.location.reload();
-            }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+            .then((res) => {
+                dispatch(createMessage({ deleteCrane: "Crane Deleted" }));
+                dispatch({ 
+                    type: DELETE_CRANE,
+                    payload: id 
+                })
+                history.push("/");
+            }).catch(error => {
+                console.log(error.response.data);
+                return false;
+            })
     }
 
     useEffect(() => {

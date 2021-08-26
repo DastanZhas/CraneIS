@@ -31,6 +31,8 @@ from rest_framework import status
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import api_view
 import json
+from rest_framework import filters
+from rest_framework import generics
 
 # Cranes Viewset
 class CranesViewSet(viewsets.ModelViewSet):
@@ -41,6 +43,8 @@ class CranesViewSet(viewsets.ModelViewSet):
     #queryset = Cranes.objects.all().filter(craneType='asda7asd')
     queryset = Cranes.objects.all()
     serializer_class = CranesSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['craneType', 'registerNumber']
 
     # action_to_serializer = {
     #     "list": ForeignKeyRetrieveSerializer,
@@ -52,6 +56,12 @@ class CranesViewSet(viewsets.ModelViewSet):
     #         self.action,
     #         self.serializer_class
     #     )
+
+class CranesSearchListView(generics.ListAPIView):
+    queryset = Cranes.objects.all()
+    serializer_class = CranesSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['craneType', 'registerNumber']
 
 
 class CranesUpdateViewSet(viewsets.ModelViewSet):

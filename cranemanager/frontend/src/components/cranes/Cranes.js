@@ -12,7 +12,7 @@ export class Cranes extends Component {
         getCranes: PropTypes.func.isRequired,
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.getCranes();
     }
 
@@ -23,7 +23,7 @@ export class Cranes extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-xl-12 mt-4 mb-4">
-                                <h2>Cranes</h2>
+                                <h2>Промышленныеss краны</h2>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-striped">
                                         <thead>
@@ -40,8 +40,9 @@ export class Cranes extends Component {
                                                     <tr key={crane.id}>
                                                         <td>{crane.craneType}</td>
                                                         <td>{crane.registerNumber}</td>
+                                                        <td>{crane.craneType}</td>
                                                         {/* <img src={crane.personResponsibleToFixedState.personImage} style={{width: 100, height: 100}} /> */}
-                                                        <Image src={crane.personResponsibleToFixedState.personImage} roundedCircle style={{ width: 100, height: 100 }} />
+                                                        {/* <Image src={crane.personResponsibleToFixedState.personImage} roundedCircle style={{ width: 100, height: 100 }} /> */}
                                                         <td className="btn-cranes"><Link className="btn btn-md btn-primary" to={`/${crane.id}/detail`}>Подробнее</Link></td>
                                                     </tr>
                                                 ))
